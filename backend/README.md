@@ -9,9 +9,10 @@ Los datos son 100 % sintéticos.
 
 ## Stack
 
-- Python 3.11+ · FastAPI · SQLAlchemy 2 · SQLite
+- Python 3.11+ · FastAPI · SQLAlchemy 2 · SQLite / PostgreSQL (psycopg)
 - Pydantic v2 · PyJWT · bcrypt · uvicorn
 - pytest + httpx (pruebas)
+- Docker + Docker Compose (API + PostgreSQL)
 - Swagger automático en `/docs`
 
 ## Requisitos
@@ -61,6 +62,36 @@ uvicorn app.main:app --reload
 - API: <http://127.0.0.1:8000>
 - Documentación Swagger: <http://127.0.0.1:8000/docs>
 - Health check: <http://127.0.0.1:8000/health>
+
+## Ejecución con Docker Compose (API + PostgreSQL)
+
+Requiere Docker Desktop (o Docker Engine + Compose v2). Desde la **raíz del
+repositorio**:
+
+```bash
+docker compose up --build
+```
+
+Levanta dos servicios:
+
+- `db`: PostgreSQL 16 con volumen persistente (`pgdata`).
+- `api`: la API en `http://localhost:8000`; espera a que la DB esté sana,
+  crea las tablas y —si la base está vacía— corre el seed automáticamente.
+
+La documentación queda en <http://localhost:8000/docs>. Los usuarios de prueba
+son los mismos de la tabla de abajo.
+
+Variables (opcionales) en un `.env` en la raíz del repo:
+
+| Variable | Por defecto |
+|---|---|
+| `POSTGRES_USER` / `POSTGRES_PASSWORD` / `POSTGRES_DB` | `ferreteria` |
+| `SECRET_KEY` | `cambia-esta-clave-en-produccion` |
+| `ALLOWED_ORIGINS` | `http://localhost:8080,http://127.0.0.1:8080` |
+
+Para bajar el stack: `docker compose down` (usa `-v` para borrar también los
+datos). El seed solo corre si la base está vacía; para forzarlo de nuevo,
+`docker compose down -v` y vuelve a levantar.
 
 ### Usuarios de prueba (seed)
 
@@ -171,12 +202,18 @@ backend/
                     alertas, reportes, bitacora
     services/       bitacora, inventario, ventas, alertas, reportes
                     (la lógica va aquí, no en los routers)
-  scripts/          seed.py, backup.py
+  scripts/          seed.py, backup.py, entrypoint.py (arranque del contenedor)
   tests/            pruebas B-01 a B-15
+  Dockerfile, .dockerignore
   .env.example, pytest.ini, requirements.txt, README.md, LICENSE
 ```
 
+El `docker-compose.yml` vive en la **raíz del repositorio** (orquesta `api` +
+`db`).
+
 ## Respaldo
+
+Con **SQLite**:
 
 ```bash
 python scripts/backup.py            # guarda en backend/backups/
@@ -186,7 +223,20 @@ python scripts/backup.py --dir ruta # otro destino
 Copia la base SQLite con fecha. Opcional: subir el archivo a
 almacenamiento en la nube.
 
-## Despliegue (Render, Railway o similar)
+Con **PostgreSQL** (Docker Compose):
+
+```bash
+docker compose exec db pg_dump -U ferreteria ferreteria > respaldo.sql
+```
+
+## Despliegue
+
+### Con Docker Compose
+
+En cualquier servidor con Docker: `docker compose up -d --build`. Define
+`SECRET_KEY` y las credenciales de Postgres en el entorno o en un `.env` raíz.
+
+### Render, Railway o similar
 
 Comando de arranque:
 
