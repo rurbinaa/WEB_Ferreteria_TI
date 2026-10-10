@@ -41,6 +41,9 @@ class Settings(BaseSettings):
     SEED_ADMIN_PASSWORD: str = "admin123"
     SEED_VENDEDOR_PASSWORD: str = "vendedor123"
 
+    # Si es True y la base de datos esta vacia, se ejecuta el seed al arrancar
+    AUTO_SEED: bool = False
+
     @field_validator("ALLOWED_ORIGINS")
     @classmethod
     def _normalizar_origenes(cls, valor: str) -> str:
