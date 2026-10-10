@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sistema Ferretería</title>
+  <link rel="stylesheet" href="../src/lib/bootstrap/bootstrap.min.css">
+  <link rel="stylesheet" href="../src/lib/bootstrap-icons/bootstrap-icons.css">
+  <link rel="stylesheet" href="../src/css/styles.css">
+  <script src="../src/lib/bootstrap/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+  <div class="login-page" style="background: var(--color-bg);">
+    <div class="login-card" style="max-width: 320px;">
+      <header class="login-header">
+        <div class="login-logo">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+            <path d="M2 17l10 5 10-5"></path>
+            <path d="M2 12l10 5 10-5"></path>
+          </svg>
+        </div>
+        <h1 class="login-title">Sistema Ferretería</h1>
+        <p class="login-subtitle">Redirigiendo...</p>
+      </header>
+      <div class="text-center py-4">
+        <div class="spinner spinner-lg mx-auto"></div>
+        <p class="text-muted mt-3">Verificando sesión...</p>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    import { api } from '../src/js/apiFactory.js';
+    import { ROLES } from '../src/js/config.js';
+
+    async function checkSession() {
+      if (!api.isAuthenticated()) {
+        window.location.href = 'login.html';
+        return;
+      }
+
+      try {
+        const user = await api.get('/auth/me');
+        api.setUser(user);
+
+        const redirectUrl = user.rol === ROLES.ADMIN ? 'dashboard.html' : 'venta.html';
+        window.location.href = redirectUrl;
+      } catch (error) {
+        api.clearAuth();
+        window.location.href = 'login.html';
+      }
+    }
+
+    checkSession();
+  </script>
+</body>
+</html>
