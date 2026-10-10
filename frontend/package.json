@@ -1,0 +1,12 @@
+{
+  "name": "ferreteria-frontend",
+  "version": "1.0.0",
+  "description": "Frontend para Sistema Ferretería - ULSA",
+  "type": "module",
+  "scripts": {
+    "dev": "node server.js",
+    "start": "node server.js"
+  },
+  "keywords": ["ferreteria", "pos", "frontend"],
+  "license": "MIT"
+}
