@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Productos - Sistema Ferretería</title>
+  <link rel="stylesheet" href="../src/lib/bootstrap/bootstrap.min.css">
+  <link rel="stylesheet" href="../src/lib/bootstrap-icons/bootstrap-icons.css">
+  <link rel="stylesheet" href="../src/css/styles.css">
+  <script src="../src/lib/bootstrap/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar" role="banner">
+      <a href="venta.html" class="topbar-brand" aria-label="Ferretería - Inicio">
+        <span class="topbar-brand-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+            <path d="M2 17l10 5 10-5"></path>
+            <path d="M2 12l10 5 10-5"></path>
+          </svg>
+        </span>
+        <span>Ferretería</span>
+      </a>
+      
+      <nav class="topbar-nav" id="topbar-nav" role="navigation" aria-label="Navegación principal">
+      </nav>
+      
+      <div class="topbar-user" id="topbar-user">
+      </div>
+    </header>
+    
+    <main class="workspace" role="main">
+      <header class="page-header">
+        <a href="venta.html" class="btn btn-ghost btn-sm d-md-none mb-3" style="width: 100%;" aria-label="Volver a Nueva Venta">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="me-2">
+            <path d="M19 12H5"></path>
+            <path d="M12 19l-7-7 7-7"></path>
+          </svg>
+          Volver a Ventas
+        </a>
+        <h1 class="page-title">Productos</h1>
+        <div class="page-actions">
+          <button class="btn btn-primary d-none" id="btn-new-product" aria-label="Nuevo producto">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="12" y1="5" x2="12" y2="19"></line>
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+            </svg>
+            Nuevo Producto
+          </button>
+        </div>
+      </header>
+      
+      <div class="filters-bar" role="search" aria-label="Filtros de productos">
+        <input type="search" id="filter-search" class="form-control" placeholder="Buscar por código o nombre..." aria-label="Buscar productos">
+        <select id="filter-category" class="form-select" aria-label="Filtrar por categoría">
+          <option value="">Todas las categorías</option>
+        </select>
+        <select id="filter-stock" class="form-select" aria-label="Filtrar por estado de stock">
+          <option value="">Todos</option>
+          <option value="agotado">Agotados</option>
+          <option value="bajo">Stock bajo</option>
+          <option value="ok">Stock OK</option>
+        </select>
+      </div>
+      
+      <div class="table-wrapper">
+        <table class="table table-hover" id="productos-table" role="grid" aria-label="Lista de productos">
+          <thead>
+            <tr>
+              <th scope="col">Código</th>
+              <th scope="col">Nombre</th>
+              <th scope="col">Categoría</th>
+              <th scope="col" class="d-none d-md-table-cell">Precio Venta</th>
+              <th scope="col" class="d-none d-lg-table-cell admin-only">Costo</th>
+              <th scope="col">Stock</th>
+              <th scope="col">Estado</th>
+              <th scope="col" class="text-end admin-only">Acciones</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+        <div id="empty-state" class="empty-state d-none" style="padding: var(--space-8);">
+          <svg class="empty-state-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+            <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+            <line x1="12" y1="22.08" x2="12" y2="12"></line>
+          </svg>
+          <p class="empty-state-title">No hay productos</p>
+          <p class="empty-state-message">Comienza agregando tu primer producto</p>
+        </div>
+      </div>
+    </main>
+  </div>
+  
+  <div class="modal-overlay" id="product-modal" role="dialog" aria-modal="true" aria-labelledby="product-modal-title">
+    <div class="modal modal-lg">
+      <header class="modal-header">
+        <h3 class="modal-title" id="product-modal-title">Nuevo Producto</h3>
+        <button type="button" class="modal-close" aria-label="Cerrar">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </header>
+      <form id="product-form" class="needs-validation" novalidate>
+        <div class="modal-body">
+          <input type="hidden" id="product-id">
+          
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label for="p_codigo" class="form-label">Código *</label>
+              <input type="text" id="p_codigo" class="form-control" required pattern="^\S+$" aria-describedby="codigo-help">
+              <div id="codigo-help" class="form-text">Sin espacios, único</div>
+              <div class="invalid-feedback">El código es requerido y no puede tener espacios</div>
+            </div>
+            <div class="col-md-6">
+              <label for="p_nombre" class="form-label">Nombre *</label>
+              <input type="text" id="p_nombre" class="form-control" required>
+              <div class="invalid-feedback">El nombre es requerido</div>
+            </div>
+            <div class="col-md-6">
+              <label for="p_categoria" class="form-label">Categoría</label>
+              <input type="text" id="p_categoria" class="form-control" list="categorias-list">
+              <datalist id="categorias-list"></datalist>
+            </div>
+            <div class="col-md-6">
+              <label for="p_unidad" class="form-label">Unidad</label>
+              <input type="text" id="p_unidad" class="form-control" value="unidad">
+            </div>
+            <div class="col-md-6">
+              <label for="p_precio_venta" class="form-label">Precio Venta *</label>
+              <input type="number" id="p_precio_venta" class="form-control" step="0.01" min="0.01" required>
+              <div class="invalid-feedback">Precio debe ser mayor a 0</div>
+            </div>
+            <div class="col-md-6 admin-only">
+              <label for="p_costo" class="form-label">Costo *</label>
+              <input type="number" id="p_costo" class="form-control" step="0.01" min="0.01" required>
+              <div class="invalid-feedback">Costo debe ser mayor a 0</div>
+            </div>
+            <div class="col-md-6">
+              <label for="p_stock_actual" class="form-label">Stock Actual</label>
+              <input type="number" id="p_stock_actual" class="form-control" min="0" value="0">
+            </div>
+            <div class="col-md-6">
+              <label for="p_stock_minimo" class="form-label">Stock Mínimo</label>
+              <input type="number" id="p_stock_minimo" class="form-control" min="0" value="5">
+            </div>
+            <div class="col-md-6">
+              <label for="p_proveedor_id" class="form-label">Proveedor</label>
+              <select id="p_proveedor_id" class="form-select">
+                <option value="">Sin proveedor</option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <div class="form-check mt-4">
+                <input type="checkbox" id="p_activo" class="form-check-input" checked>
+                <label class="form-check-label" for="p_activo">Activo</label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <footer class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+          <button type="submit" class="btn btn-primary">Guardar</button>
+        </footer>
+      </form>
+    </div>
+  </div>
+  
+  <script type="module" src="../src/js/auth.js"></script>
+  <script type="module" src="../src/js/productos.js"></script>
+  <script type="module" src="../src/js/app.js"></script>
+</body>
+</html>
