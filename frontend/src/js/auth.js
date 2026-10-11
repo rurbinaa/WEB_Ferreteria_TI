@@ -5,28 +5,11 @@ import { showToast, escapeHtml } from './ui.js';
 const PUBLIC_PAGES = ['login.html', 'index.html'];
 const ADMIN_ONLY_PAGES = ['dashboard.html', 'proveedores.html', 'alertas.html'];
 const VENDEDOR_PAGES = ['venta.html', 'productos.html'];
-const THEME_STORAGE_KEY = 'ferreteria_theme';
 
 function getCurrentPage() {
   const path = window.location.pathname;
   const page = path.split('/').pop() || 'index.html';
   return page;
-}
-
-function initTheme() {
-  const savedTheme = localStorage.getItem(THEME_STORAGE_KEY);
-  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-  const theme = savedTheme || (prefersDark ? 'dark' : 'light');
-  document.documentElement.setAttribute('data-theme', theme);
-  return theme;
-}
-
-function toggleTheme() {
-  const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
-  const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-  document.documentElement.setAttribute('data-theme', newTheme);
-  localStorage.setItem(THEME_STORAGE_KEY, newTheme);
-  return newTheme;
 }
 
 function canAccessPage(page) {
@@ -46,7 +29,6 @@ function getDefaultPageForRole(role) {
 }
 
 export function initAuthGuard() {
-  initTheme();
   const page = getCurrentPage();
 
   if (PUBLIC_PAGES.includes(page)) {
@@ -107,6 +89,7 @@ function renderTopBar() {
   const sunIcon = '<svg class="icon icon-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>';
   const moonIcon = '<svg class="icon icon-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>';
   const themeIcon = isDark ? sunIcon : moonIcon;
+  const themeLabel = isDark ? 'Modo claro' : 'Modo oscuro';
   
   topbarUser.innerHTML = `
     <div class="topbar-user-info">
@@ -114,27 +97,10 @@ function renderTopBar() {
       <span class="topbar-user-role ${roleClass}">${roleLabel}</span>
     </div>
     <div class="avatar topbar-avatar">${escapeHtml((user?.nombre_completo || user?.nombre_usuario || 'U')[0].toUpperCase())}</div>
-    <button class="btn btn-ghost btn-sm" id="btn-theme-toggle" aria-label="${themeLabel}" title="${themeLabel}">
-      <span class="theme-toggle-icon">${themeIcon}</span>
-    </button>
     <button class="btn btn-ghost btn-sm" id="btn-logout" aria-label="Cerrar sesión">Salir</button>
   `;
 
   document.getElementById('btn-logout')?.addEventListener('click', () => api.logout());
-  document.getElementById('btn-theme-toggle')?.addEventListener('click', () => {
-    const newTheme = toggleTheme();
-    const btn = document.getElementById('btn-theme-toggle');
-    if (btn) {
-      const isDark = newTheme === 'dark';
-      const sunIcon = '<svg class="icon icon-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>';
-      const moonIcon = '<svg class="icon icon-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>';
-      const newIcon = isDark ? sunIcon : moonIcon;
-      const newLabel = isDark ? 'Modo claro' : 'Modo oscuro';
-      btn.innerHTML = `<span class="theme-toggle-icon">${newIcon}</span>`;
-      btn.setAttribute('aria-label', newLabel);
-      btn.setAttribute('title', newLabel);
-    }
-  });
 }
 
 export async function handleLogin(form) {
