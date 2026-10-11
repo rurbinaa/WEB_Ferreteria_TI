@@ -21,33 +21,33 @@ async function loadResumen() {
   try {
     const data = await api.get(ENDPOINTS.reportes.resumen);
     
-    const kpis = [
+const kpis = [
       { 
         label: 'Ventas Hoy', 
         value: formatCurrency(data.ventas_hoy?.total || 0), 
         trend: data.ventas_hoy?.tendencia || null,
-        icon: '💰',
+        icon: '<svg class="icon icon-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2z"></path><path d="M12 6v6l4 4"></path></svg>',
         class: 'primary'
       },
       { 
         label: 'Alertas Pendientes', 
         value: data.alertas_pendientes || 0, 
         trend: null,
-        icon: '⚠️',
+        icon: '<svg class="icon icon-warning" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>',
         class: 'warning'
       },
       { 
         label: 'Productos Agotados', 
         value: data.productos_agotados || 0, 
         trend: null,
-        icon: '📦',
+        icon: '<svg class="icon icon-danger" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>',
         class: 'danger'
       },
       { 
         label: 'Ticket Promedio', 
         value: formatCurrency(data.ticket_promedio || 0), 
         trend: null,
-        icon: '📊',
+        icon: '<svg class="icon icon-info" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>',
         class: 'info'
       }
     ];
@@ -187,8 +187,10 @@ async function loadAlertasRecientes() {
               Stock: ${a.stock_al_generar}
             </span>
             <span>Mín: ${a.producto?.stock_minimo || 'N/A'}</span>
-            <span class="alert-quick-confianza ${a.confianza || 'normal'}">
-              ${a.confianza === 'baja' ? '⚠ Confianza baja' : '✓ Normal'}
+<span class="alert-quick-confianza ${a.confianza || 'normal'}">
+              ${a.confianza === 'baja' 
+                ? '<svg class="icon icon-warning" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg> Confianza baja' 
+                : '<svg class="icon icon-success" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg> Normal'}
             </span>
           </div>
         </div>
