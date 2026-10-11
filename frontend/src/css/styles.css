@@ -1091,6 +1091,821 @@ tbody tr:hover td {
 
 /* When used inside a colored container, inherit color */
 .icon-inherit { color: inherit; }
+
+/* ===== Dark Mode Component Overrides ===== */
+[data-theme="dark"] {
+  /* Cards */
+  .card {
+    background-color: var(--color-bg-card);
+    border-color: var(--color-border);
+  }
+  
+  .card-header {
+    background-color: var(--color-bg);
+    border-color: var(--color-border);
+  }
+  
+  .card-footer {
+    background-color: var(--color-bg);
+    border-color: var(--color-border);
+  }
+  
+  /* Tables */
+  .table th {
+    background-color: var(--color-bg);
+    border-color: var(--color-border);
+    color: var(--color-text-secondary);
+  }
+  
+  .table td {
+    border-color: var(--color-border);
+    background-color: transparent;
+  }
+  
+  .table-striped tbody tr:nth-of-type(odd) td {
+    background-color: var(--color-bg);
+  }
+  
+  .table-hover tbody tr:hover td {
+    background-color: var(--color-bg-hover);
+  }
+  
+  .table-wrapper {
+    background-color: var(--color-bg-card);
+    border-color: var(--color-border);
+  }
+  
+  /* Modals */
+  .modal {
+    background-color: var(--color-bg-card);
+    border-color: var(--color-border);
+  }
+  
+  .modal-header {
+    border-color: var(--color-border);
+  }
+  
+  .modal-footer {
+    border-color: var(--color-border);
+  }
+  
+  .modal-overlay {
+    background-color: rgba(0, 0, 0, 0.6);
+  }
+  
+  /* Forms */
+  .form-control,
+  .form-select {
+    background-color: var(--color-bg-card);
+    border-color: var(--color-border);
+    color: var(--color-text);
+  }
+  
+  .form-control:focus,
+  .form-select:focus {
+    background-color: var(--color-bg-card);
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 3px var(--color-primary-light);
+  }
+  
+  .form-control::placeholder {
+    color: var(--color-text-muted);
+  }
+  
+  .form-control.is-invalid {
+    border-color: var(--color-danger);
+  }
+  
+  .form-control.is-invalid:focus {
+    box-shadow: 0 0 0 3px var(--color-danger-light);
+  }
+  
+  .form-select {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%2394a3b8' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+  }
+  
+  .input-group-text {
+    background-color: var(--color-bg);
+    border-color: var(--color-border);
+    color: var(--color-text-secondary);
+  }
+  
+  /* Badges */
+  .badge-secondary {
+    background-color: var(--color-bg);
+    color: var(--color-text-secondary);
+    border-color: var(--color-border);
+  }
+  
+  /* Dropdowns */
+  .dropdown-menu {
+    background-color: var(--color-bg-card);
+    border-color: var(--color-border);
+    box-shadow: var(--shadow-lg);
+  }
+  
+  .dropdown-item:hover {
+    background-color: var(--color-bg-hover);
+  }
+  
+  .dropdown-divider {
+    background-color: var(--color-border);
+  }
+  
+  /* Tooltips/Toasts */
+  .toast {
+    background-color: var(--color-bg-card);
+    border-color: var(--color-border);
+    box-shadow: var(--shadow-lg);
+  }
+  
+  .alert-success { background-color: var(--color-success-light); border-color: var(--color-success); color: var(--color-success); }
+  .alert-danger { background-color: var(--color-danger-light); border-color: var(--color-danger); color: var(--color-danger); }
+  .alert-warning { background-color: var(--color-warning-light); border-color: var(--color-warning); color: var(--color-warning); }
+  .alert-info { background-color: var(--color-info-light); border-color: var(--color-info); color: var(--color-info); }
+  
+  /* Tabs */
+  .tab-bar {
+    border-color: var(--color-border);
+  }
+  
+  .tab-btn:hover {
+    background-color: var(--color-bg-hover);
+  }
+  
+  .tab-btn.active {
+    color: var(--color-primary);
+    border-bottom-color: var(--color-primary);
+    background-color: var(--color-primary-light);
+  }
+  
+  /* Accordion/Collapse */
+  .accordion-button {
+    background-color: var(--color-bg);
+  }
+  
+  .accordion-button:not(.collapsed) {
+    background-color: var(--color-primary-light);
+    color: var(--color-primary);
+  }
+  
+  .accordion-button:focus {
+    box-shadow: 0 0 0 3px var(--color-primary-light);
+  }
+  
+  .accordion-body {
+    background-color: var(--color-bg-card);
+  }
+  
+  /* Lists */
+  .list-group-item {
+    background-color: var(--color-bg-card);
+    border-color: var(--color-border);
+  }
+  
+  .list-group-item:hover {
+    background-color: var(--color-bg-hover);
+  }
+  
+  /* Pagination */
+  .page-link {
+    background-color: var(--color-bg-card);
+    border-color: var(--color-border);
+    color: var(--color-primary);
+  }
+  
+  .page-link:hover {
+    background-color: var(--color-bg-hover);
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+  }
+  
+  .page-item.active .page-link {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+    color: var(--color-text-inverse);
+  }
+  
+  .page-item.disabled .page-link {
+    color: var(--color-text-muted);
+    background-color: var(--color-bg);
+    border-color: var(--color-border);
+  }
+  
+  /* Progress */
+  .progress {
+    background-color: var(--color-bg);
+  }
+  
+  /* Spinners */
+  .spinner {
+    border-color: var(--color-border);
+    border-top-color: var(--color-primary);
+  }
+  
+  .spinner-overlay {
+    background-color: rgba(0, 0, 0, 0.7);
+  }
+  
+  /* Breadcrumb */
+  .breadcrumb {
+    background-color: transparent;
+  }
+  
+  .breadcrumb-item + .breadcrumb-item::before {
+    color: var(--color-text-muted);
+  }
+  
+  /* Nav */
+  .nav-link {
+    color: var(--color-text-secondary);
+  }
+  
+  .nav-link:hover {
+    color: var(--color-primary);
+  }
+  
+  .nav-link.active {
+    color: var(--color-primary);
+    background-color: var(--color-primary-light);
+  }
+  
+  /* Pills */
+  .nav-pills .nav-link.active {
+    background-color: var(--color-primary);
+    color: var(--color-text-inverse);
+  }
+  
+  /* Tables - specific fixes for data tables */
+  .table {
+    color: var(--color-text);
+  }
+  
+  .table thead th {
+    color: var(--color-text-secondary);
+  }
+  
+  .table tbody td {
+    color: var(--color-text);
+  }
+  
+  .table-striped > tbody > tr:nth-of-type(odd) {
+    background-color: var(--color-bg);
+  }
+  
+  .table-hover tbody tr:hover {
+    background-color: var(--color-bg-hover);
+  }
+  
+  /* Empty states */
+  .empty-state {
+    color: var(--color-text-muted);
+  }
+  
+  .empty-state-title {
+    color: var(--color-text-secondary);
+  }
+  
+  .empty-state-message {
+    color: var(--color-text-muted);
+  }
+  
+  /* KPI Cards */
+  .kpi-card {
+    background-color: var(--color-bg-card);
+    border-color: var(--color-border);
+  }
+  
+  .kpi-card:hover {
+    box-shadow: var(--shadow);
+  }
+  
+  .kpi-icon {
+    background-color: var(--color-primary-light);
+  }
+  
+  .kpi-card.success .kpi-icon { background-color: var(--color-success-light); }
+  .kpi-card.warning .kpi-icon { background-color: var(--color-warning-light); }
+  .kpi-card.danger .kpi-icon { background-color: var(--color-danger-light); }
+  .kpi-card.info .kpi-icon { background-color: var(--color-info-light); }
+  
+  /* Chart containers */
+  .chart-container {
+    background-color: var(--color-bg-card);
+    border-color: var(--color-border);
+  }
+  
+  /* Alerts quick */
+  .alerts-quick {
+    background-color: var(--color-bg-card);
+    border-color: var(--color-border);
+  }
+  
+  .alerts-quick-header {
+    background-color: var(--color-bg);
+    border-color: var(--color-border);
+  }
+  
+  .alert-quick-item:hover {
+    background-color: var(--color-bg-hover);
+  }
+  
+  /* Topbar */
+  .topbar {
+    background-color: var(--color-bg-card);
+    border-color: var(--color-border);
+  }
+  
+  .topbar-brand:hover {
+    color: var(--color-primary);
+  }
+  
+  .topbar-tab:hover {
+    background-color: var(--color-bg-hover);
+    color: var(--color-text);
+  }
+  
+  .topbar-tab.active {
+    color: var(--color-primary);
+    background-color: var(--color-primary-light);
+  }
+  
+  .topbar-user-info {
+    color: var(--color-text);
+  }
+  
+  .topbar-avatar {
+    background-color: var(--color-primary-light);
+    color: var(--color-primary);
+  }
+  
+  /* Workspace */
+  .workspace {
+    background-color: var(--color-bg);
+  }
+  
+  .panel {
+    background-color: var(--color-bg-card);
+    border-color: var(--color-border);
+  }
+  
+  .panel-header {
+    background-color: var(--color-bg);
+    border-color: var(--color-border);
+  }
+  
+  .panel-footer {
+    background-color: var(--color-bg);
+    border-color: var(--color-border);
+  }
+  
+  /* Buttons - ensure consistent theming */
+  .btn-secondary {
+    background-color: var(--color-bg-card);
+    border-color: var(--color-border);
+    color: var(--color-text);
+  }
+  
+  .btn-secondary:hover:not(:disabled) {
+    background-color: var(--color-bg-hover);
+    border-color: var(--color-border-strong);
+    color: var(--color-text);
+  }
+  
+  .btn-ghost {
+    background-color: transparent;
+    color: var(--color-text-secondary);
+  }
+  
+  .btn-ghost:hover:not(:disabled) {
+    background-color: var(--color-bg-hover);
+    color: var(--color-text);
+  }
+  
+  .btn-outline-primary {
+    color: var(--color-primary);
+    border-color: var(--color-primary);
+    background-color: transparent;
+  }
+  
+  .btn-outline-primary:hover:not(:disabled) {
+    background-color: var(--color-primary-light);
+    color: var(--color-primary);
+  }
+  
+  .btn-outline-secondary {
+    color: var(--color-text-secondary);
+    border-color: var(--color-border);
+    background-color: transparent;
+  }
+  
+  .btn-outline-secondary:hover:not(:disabled) {
+    background-color: var(--color-bg-hover);
+    border-color: var(--color-border-strong);
+    color: var(--color-text);
+  }
+  
+  .btn-outline-danger {
+    color: var(--color-danger);
+    border-color: var(--color-danger);
+    background-color: transparent;
+  }
+  
+  .btn-outline-danger:hover:not(:disabled) {
+    background-color: var(--color-danger-light);
+    color: var(--color-danger);
+  }
+  
+  /* Filters bar */
+  .filters-bar {
+    background-color: var(--color-bg);
+    border-color: var(--color-border);
+  }
+  
+  /* Page header */
+  .page-header {
+    border-bottom: 1px solid var(--color-border);
+  }
+  
+  /* Chart containers */
+  .chart-container {
+    background-color: var(--color-bg-card);
+    border-color: var(--color-border);
+  }
+  
+  .chart-header {
+    border-bottom: 1px solid var(--color-border);
+  }
+  
+  /* Alerts quick */
+  .alerts-quick {
+    background-color: var(--color-bg-card);
+    border-color: var(--color-border);
+  }
+  
+  .alerts-quick-header {
+    background-color: var(--color-bg);
+    border-color: var(--color-border);
+  }
+  
+  .alert-quick-item:hover {
+    background-color: var(--color-bg-hover);
+  }
+  
+  /* Offline badge */
+  .offline-badge {
+    background-color: var(--color-warning-light);
+    color: var(--color-warning);
+    border-color: var(--color-warning);
+  }
+  
+  /* KPI cards */
+  .kpi-card {
+    background-color: var(--color-bg-card);
+    border-color: var(--color-border);
+  }
+  
+  .kpi-card:hover {
+    box-shadow: var(--shadow);
+  }
+  
+  .kpi-card.primary .kpi-icon { background-color: var(--color-primary-light); }
+  .kpi-card.success .kpi-icon { background-color: var(--color-success-light); }
+  .kpi-card.warning .kpi-icon { background-color: var(--color-warning-light); }
+  .kpi-card.danger .kpi-icon { background-color: var(--color-danger-light); }
+  .kpi-card.info .kpi-icon { background-color: var(--color-info-light); }
+  
+  /* Dashboard grid */
+  .dashboard-grid {
+    gap: var(--space-4);
+  }
+  
+  /* Historial panel */
+  .historial-panel {
+    background-color: var(--color-bg-card);
+    border-color: var(--color-border);
+  }
+  
+  .historial-header {
+    background-color: var(--color-bg);
+    border-color: var(--color-border);
+  }
+  
+  .historial-header:hover {
+    background-color: var(--color-bg-hover);
+  }
+  
+  /* Invoice panel */
+  .invoice-panel {
+    background-color: var(--color-bg-card);
+    border-color: var(--color-border);
+  }
+  
+  .invoice-header {
+    background-color: var(--color-bg);
+    border-color: var(--color-border);
+  }
+  
+  .invoice-footer {
+    background-color: var(--color-bg);
+    border-color: var(--color-border);
+  }
+  
+  .invoice-line {
+    border-color: var(--color-border);
+  }
+  
+  .invoice-line:hover {
+    background-color: var(--color-bg-hover);
+  }
+  
+  .invoice-total-row.grand {
+    border-color: var(--color-border);
+  }
+  
+  .qty-btn {
+    background-color: var(--color-bg-card);
+    border-color: var(--color-border);
+    color: var(--color-text-secondary);
+  }
+  
+  .qty-btn:hover:not(:disabled) {
+    background-color: var(--color-primary-light);
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+  }
+  
+  .invoice-line-remove:hover {
+    background-color: var(--color-danger-light);
+    color: var(--color-danger);
+  }
+  
+  /* Tab bar */
+  .tab-bar {
+    border-color: var(--color-border);
+  }
+  
+  .tab-btn:hover {
+    background-color: var(--color-bg-hover);
+  }
+  
+  /* Alerts quick list */
+  .alerts-quick-list {
+    background-color: transparent;
+  }
+  
+  .alert-quick-item:hover {
+    background-color: var(--color-bg-hover);
+  }
+  
+  /* Login page */
+  .login-page {
+    background: var(--color-bg);
+  }
+  
+  .login-bg {
+    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+  }
+  
+  .login-form-side {
+    background: var(--color-bg-card);
+  }
+  
+  .form-input {
+    background: var(--color-bg-card);
+    border-color: var(--color-border);
+    color: var(--color-text);
+  }
+  
+  .form-input:focus {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 4px var(--color-primary-light);
+  }
+  
+  .form-floating-label {
+    color: var(--color-text-muted);
+  }
+  
+  .form-input:focus + .form-floating-label,
+  .form-input:not(:placeholder-shown) + .form-floating-label {
+    color: var(--color-primary);
+  }
+  
+  .form-underline {
+    background: var(--color-border);
+  }
+  
+  .form-input:focus ~ .form-underline {
+    background: var(--color-primary);
+  }
+  
+  .btn-login {
+    background: var(--color-primary);
+  }
+  
+  .btn-login:hover:not(:disabled) {
+    background: var(--color-primary-hover);
+  }
+  
+  .btn-login:focus-visible {
+    outline-color: var(--color-primary);
+  }
+  
+  .alert-icon,
+  .input-icon,
+  .field-icon {
+    color: var(--icon-color-muted);
+  }
+  
+  .form-input.has-toggle {
+    padding-right: 48px;
+  }
+  
+  .toggle-password {
+    color: var(--icon-color-muted);
+  }
+  
+  .toggle-password:hover {
+    color: var(--icon-color);
+    background: rgba(100, 116, 139, 0.12);
+  }
+  
+  .btn-login.loading .btn-loading {
+    stroke: currentColor;
+  }
+  
+  .login-footer-text {
+    color: var(--color-text-secondary);
+  }
+  
+  .login-footer {
+    border-color: var(--color-border);
+  }
+  
+  .alert {
+    border-color: var(--color-border);
+  }
+  
+  .alert-danger {
+    background: var(--color-danger-light);
+    border-color: var(--color-danger);
+    color: var(--color-danger);
+  }
+  
+  .login-form-header {
+    border-bottom: none;
+  }
+  
+  .login-form-title {
+    color: var(--color-text);
+  }
+  
+  .login-form-subtitle {
+    color: var(--color-text-secondary);
+  }
+  
+  .form-label {
+    color: var(--color-text);
+  }
+  
+  .form-group {
+    gap: 0.5rem;
+  }
+  
+  .form-input-wrapper {
+    position: relative;
+  }
+  
+  .field-icon {
+    color: var(--icon-color-muted);
+  }
+  
+  .form-input {
+    background: var(--color-bg-card);
+    border-color: var(--color-border);
+    color: var(--color-text);
+  }
+  
+  .form-input::placeholder {
+    color: var(--icon-color-muted);
+  }
+  
+  .form-input:focus {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 4px var(--color-primary-light);
+  }
+  
+  .form-input.is-invalid {
+    border-color: var(--color-danger);
+  }
+  
+  .form-input.is-invalid:focus {
+    box-shadow: 0 0 0 4px var(--color-danger-light);
+  }
+  
+  .form-floating-label {
+    color: var(--icon-color-muted);
+  }
+  
+  .form-input:focus + .form-floating-label,
+  .form-input:not(:placeholder-shown) + .form-floating-label {
+    color: var(--color-primary);
+  }
+  
+  .form-underline {
+    background: var(--color-border);
+  }
+  
+  .form-input:focus ~ .form-underline {
+    background: var(--color-primary);
+  }
+  
+  .invalid-feedback {
+    color: var(--color-danger);
+  }
+  
+  .btn-login {
+    background: var(--color-primary);
+  }
+  
+  .btn-login:hover:not(:disabled) {
+    background: var(--color-primary-hover);
+  }
+  
+  .btn-login:focus-visible {
+    outline-color: var(--color-primary);
+  }
+  
+  .login-spinner {
+    stroke: currentColor;
+  }
+  
+  .alert-icon {
+    stroke: currentColor;
+  }
+  
+  .alert.d-none {
+    display: none !important;
+  }
+  
+  .alert-danger {
+    background: var(--color-danger-light);
+    border-color: var(--color-danger);
+    color: var(--color-danger);
+  }
+  
+  .login-footer {
+    border-color: var(--color-border);
+  }
+  
+  .login-footer-text {
+    color: var(--color-text-secondary);
+  }
+  
+  .alert-icon {
+    stroke: currentColor;
+  }
+  
+  .alert.d-none {
+    display: none !important;
+  }
+  
+  .alert-danger {
+    background: var(--color-danger-light);
+    border-color: var(--color-danger);
+    color: var(--color-danger);
+  }
+  
+  .login-footer {
+    border-color: var(--color-border);
+  }
+  
+  .login-footer-text {
+    color: var(--color-text-secondary);
+  }
+  
+  .alert-icon {
+    stroke: currentColor;
+  }
+  
+  .alert.d-none {
+    display: none !important;
+  }
+  
+  .alert-danger {
+    background: var(--color-danger-light);
+    border-color: var(--color-danger);
+    color: var(--color-danger);
+  }
+  
+  .login-footer {
+    border-color: var(--color-border);
+  }
+  
+  .login-footer-text {
+    color: var(--color-text-secondary);
+  }
+}
 .app-shell {
   display: grid;
   grid-template-rows: var(--topbar-height) 1fr;
