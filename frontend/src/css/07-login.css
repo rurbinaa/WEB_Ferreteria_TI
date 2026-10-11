@@ -1,10 +1,13 @@
-/* Login Page Styles - Split layout with underline inputs */
+/* Login Page Styles - Split layout (versión mejorada) */
 
 .login-page {
   position: fixed;
   inset: 0;
   z-index: 1;
   display: flex;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   background: var(--bg);
 }
@@ -96,7 +99,7 @@
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 10px;
   backdrop-filter: blur(10px);
-  transition: var(--transition);
+    transition: background 0.35s ease, border-color 0.35s ease, transform 0.35s ease;
 }
 
 .login-bg-feature:hover {
@@ -122,16 +125,17 @@
   flex: 1;
 }
 
+/* Textos un poco más grandes para que se lean mejor */
 .login-bg-feature-label {
-  font-size: 0.8125rem;
+  font-size: 0.9375rem;
   font-weight: 600;
   color: #ffffff;
   margin: 0 0 0.25rem;
 }
 
 .login-bg-feature-desc {
-  font-size: 0.75rem;
-  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.8125rem;
+  color: rgba(255, 255, 255, 0.7);
   margin: 0;
   line-height: 1.4;
 }
@@ -146,7 +150,7 @@
   justify-content: center;
   padding: 2.5rem;
   box-shadow: var(--shadow);
-  overflow: hidden;
+  overflow-y: auto;            /* antes: hidden (cortaba el formulario en pantallas bajas) */
   flex-shrink: 0;
 }
 
@@ -187,106 +191,110 @@
 }
 
 .form-label {
-  font-size: 0.8125rem;
-  font-weight: 500;
+  font-size: 0.875rem;
+  font-weight: 600;
   color: var(--text);
 }
 
+/* ===== Inputs: etiqueta fija arriba + caja con icono (sin label flotante) ===== */
 .form-input-wrapper {
   position: relative;
 }
 
+/* Posición fija del icono: el wrapper crece cuando aparece el mensaje de error */
+.field-icon {
+  position: absolute;
+  left: 14px;
+  top: 14px;
+  width: 20px;
+  height: 20px;
+  color: var(--text-muted);
+  pointer-events: none;
+}
+
 .form-input {
   width: 100%;
-  padding: 1rem 0.75rem 0.75rem;
+  box-sizing: border-box;
+  height: 48px;
+  padding: 0 14px 0 44px;
+  font: inherit;
   font-size: 1rem;
   color: var(--text);
-  background: transparent;
-  border: none;
-  border-bottom: 2px solid var(--border);
-  border-radius: 0;
-  transition: var(--transition);
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 10px;
   outline: none;
+  transition: var(--transition);
 }
 
 .form-input::placeholder {
   color: var(--text-muted);
-  opacity: 0;
-  transition: var(--transition);
+  opacity: 0.4;
+}
+
+.form-input.has-toggle {
+  padding-right: 48px;
 }
 
 .form-input:focus {
-  border-bottom-color: var(--primary);
+  border-color: var(--primary);
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.18);
 }
 
-.form-input:focus::placeholder,
-.form-input:not(:placeholder-shown)::placeholder {
-  opacity: 1;
+.form-input.is-invalid,
+.form-input.is-invalid:focus {
+  border-color: var(--error);
 }
 
-.form-input.is-invalid {
-  border-bottom-color: var(--error);
+.form-input.is-invalid:focus {
+  box-shadow: 0 0 0 4px rgba(220, 38, 38, 0.15);
 }
 
-.form-input:focus.is-invalid {
-  border-bottom-color: var(--error);
-}
-
-.form-floating-label {
+/* Botón ver / ocultar contraseña */
+.toggle-password {
   position: absolute;
-  top: 1rem;
-  left: 0.75rem;
-  font-size: 1rem;
+  right: 6px;
+  top: 6px;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
   color: var(--text-muted);
-  pointer-events: none;
-  transition: var(--transition);
-  transform-origin: left top;
-}
-
-.form-input:focus + .form-floating-label,
-.form-input:not(:placeholder-shown) + .form-floating-label {
-  top: -0.25rem;
-  left: 0;
-  font-size: 0.75rem;
-  color: var(--primary);
-  font-weight: 500;
-}
-
-.form-input.is-invalid:focus + .form-floating-label,
-.form-input.is-invalid:not(:placeholder-shown) + .form-floating-label {
-  color: var(--error);
-}
-
-.form-underline {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: var(--border);
+  cursor: pointer;
   transition: var(--transition);
 }
 
-.form-input:focus ~ .form-underline {
-  background: var(--primary);
+.toggle-password svg {
+  width: 20px;
+  height: 20px;
 }
 
-.form-input.is-invalid ~ .form-underline {
-  background: var(--error);
+.toggle-password:hover {
+  color: var(--text);
+  background: rgba(100, 116, 139, 0.12);
+}
+
+.toggle-password:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 1px;
 }
 
 .invalid-feedback {
   display: none;
-  font-size: 0.75rem;
+  font-size: 0.8125rem;
   color: var(--error);
   margin-top: 0.375rem;
 }
 
-.form-input.is-invalid + .form-floating-label + .form-underline + .invalid-feedback,
 .form-input.is-invalid ~ .invalid-feedback {
   display: block;
 }
 
+/* ===== Botón ===== */
 .btn-login {
   width: 100%;
   padding: 1rem 1.5rem;
@@ -313,6 +321,11 @@
   box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
 }
 
+.btn-login:focus-visible {
+  outline: 3px solid rgba(37, 99, 235, 0.45);
+  outline-offset: 2px;
+}
+
 .btn-login:disabled {
   opacity: 0.6;
   cursor: not-allowed;
@@ -334,12 +347,10 @@
   gap: 0.5rem;
 }
 
-.spinner {
-  width: 18px;
-  height: 18px;
-  border: 2px solid rgba(255, 255, 255, 0.3);
-  border-top-color: var(--white);
-  border-radius: 50%;
+/* El spinner es un SVG con trazo: ya no lleva borde propio (antes se veía doble) */
+.login-spinner {
+  width: 22px;
+  height: 22px;
   animation: spin 0.8s linear infinite;
 }
 
@@ -347,14 +358,25 @@
   to { transform: rotate(360deg); }
 }
 
+/* ===== Alerta de error ===== */
 .alert {
   display: flex;
   align-items: center;
   gap: 0.625rem;
   padding: 0.875rem 1rem;
   border-radius: 10px;
-  font-size: 0.8125rem;
-  margin-bottom: 1rem;
+  font-size: 0.875rem;
+  margin-bottom: 0;            /* el gap de .login-form ya separa */
+}
+
+.alert svg {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+}
+
+.alert.d-none {
+  display: none !important;
 }
 
 .alert-danger {
@@ -369,6 +391,7 @@
   height: 18px;
 }
 
+/* ===== Pie ===== */
 .login-footer {
   margin-top: 2rem;
   text-align: center;
@@ -378,7 +401,8 @@
 
 .login-footer-text {
   font-size: 0.8125rem;
-  color: var(--text-muted);
+  line-height: 1.6;
+  color: var(--text-secondary);   /* antes --text-muted: poco contraste */
   margin: 0;
 }
 
