@@ -76,36 +76,34 @@
 }
 
 /* Dark mode support (opt-in via data-theme="dark" on <html>) */
-[data-theme="dark"] {
-  :root {
-    --color-primary: #3b82f6;
-    --color-primary-hover: #2563eb;
-    --color-primary-light: #1e3a5f;
-    --color-success: #22c55e;
-    --color-success-light: #14532d;
-    --color-warning: #f59e0b;
-    --color-warning-light: #78350f;
-    --color-danger: #ef4444;
-    --color-danger-light: #7f1d1d;
-    --color-info: #06b6d4;
-    --color-info-light: #164e63;
+:root[data-theme="dark"] {
+  --color-primary: #3b82f6;
+  --color-primary-hover: #2563eb;
+  --color-primary-light: #1e3a5f;
+  --color-success: #22c55e;
+  --color-success-light: #14532d;
+  --color-warning: #f59e0b;
+  --color-warning-light: #78350f;
+  --color-danger: #ef4444;
+  --color-danger-light: #7f1d1d;
+  --color-info: #06b6d4;
+  --color-info-light: #164e63;
 
-    --color-bg: #0f172a;
-    --color-bg-card: #1e293b;
-    --color-bg-hover: #334155;
-    --color-border: #334155;
-    --color-border-strong: #475569;
+  --color-bg: #0f172a;
+  --color-bg-card: #1e293b;
+  --color-bg-hover: #334155;
+  --color-border: #334155;
+  --color-border-strong: #475569;
 
-    --color-text: #f1f5f9;
-    --color-text-secondary: #cbd5e1;
-    --color-text-muted: #94a3b8;
-    --color-text-inverse: #0f172a;
-  }
+  --color-text: #f1f5f9;
+  --color-text-secondary: #cbd5e1;
+  --color-text-muted: #94a3b8;
+  --color-text-inverse: #0f172a;
 }
 
 /* Dark mode support (automatic via prefers-color-scheme) */
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme="light"]) {
     --color-primary: #3b82f6;
     --color-primary-hover: #2563eb;
     --color-primary-light: #1e3a5f;
@@ -763,12 +761,14 @@ tbody tr:hover td {
   height: 2rem;
   border-radius: var(--radius);
   color: var(--color-text-muted);
+  border: 2px solid transparent;
   transition: all var(--transition-fast);
 }
 
 .modal-close:hover {
-  background-color: var(--color-bg-hover);
-  color: var(--color-text);
+  background-color: var(--color-danger-light);
+  color: var(--color-danger);
+  border-color: var(--color-danger);
   text-decoration: none;
 }
 
@@ -1635,10 +1635,16 @@ tbody tr:hover td {
     color: var(--color-primary);
   }
   
-  .invoice-line-remove:hover {
-    background-color: var(--color-danger-light);
-    color: var(--color-danger);
-  }
+.invoice-line-remove {
+  border: 2px solid transparent;
+  transition: all var(--transition-fast);
+}
+
+.invoice-line-remove:hover {
+  background-color: var(--color-danger-light);
+  color: var(--color-danger);
+  border-color: var(--color-danger);
+}
   
   /* Tab bar */
   .tab-bar {
@@ -2242,6 +2248,13 @@ tbody tr:hover td {
   font-weight: 700;
   color: var(--color-text);
   margin: 0;
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+h1.page-title, .page-header h1 {
+  border-bottom: none;
+  padding-bottom: 0;
 }
 
 .page-actions {

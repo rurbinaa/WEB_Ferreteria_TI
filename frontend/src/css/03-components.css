@@ -402,12 +402,14 @@
   height: 2rem;
   border-radius: var(--radius);
   color: var(--color-text-muted);
+  border: 2px solid transparent;
   transition: all var(--transition-fast);
 }
 
 .modal-close:hover {
-  background-color: var(--color-bg-hover);
-  color: var(--color-text);
+  background-color: var(--color-danger-light);
+  color: var(--color-danger);
+  border-color: var(--color-danger);
   text-decoration: none;
 }
 
@@ -1274,10 +1276,16 @@
     color: var(--color-primary);
   }
   
-  .invoice-line-remove:hover {
-    background-color: var(--color-danger-light);
-    color: var(--color-danger);
-  }
+.invoice-line-remove {
+  border: 2px solid transparent;
+  transition: all var(--transition-fast);
+}
+
+.invoice-line-remove:hover {
+  background-color: var(--color-danger-light);
+  color: var(--color-danger);
+  border-color: var(--color-danger);
+}
   
   /* Tab bar */
   .tab-bar {
