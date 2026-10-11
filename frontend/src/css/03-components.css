@@ -700,3 +700,33 @@
 
 .avatar-sm { width: 2rem; height: 2rem; font-size: 0.75rem; }
 .avatar-lg { width: 3.5rem; height: 3.5rem; font-size: 1.25rem; }
+
+/* ===== Icon Utility Classes ===== */
+.icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--icon-size-md);
+  height: var(--icon-size-md);
+  stroke: currentColor;
+  fill: none;
+  flex-shrink: 0;
+}
+
+.icon-xs { width: var(--icon-size-xs); height: var(--icon-size-xs); }
+.icon-sm { width: var(--icon-size-sm); height: var(--icon-size-sm); }
+.icon-lg { width: var(--icon-size-lg); height: var(--icon-size-lg); }
+.icon-xl { width: var(--icon-size-xl); height: var(--icon-size-xl); }
+.icon-2xl { width: var(--icon-size-2xl); height: var(--icon-size-2xl); }
+
+/* Color modifiers - usan currentColor para adaptarse al contexto */
+.icon-muted { color: var(--icon-color-muted); }
+.icon-primary { color: var(--icon-color-primary); }
+.icon-success { color: var(--color-success); }
+.icon-warning { color: var(--color-warning); }
+.icon-danger { color: var(--color-danger); }
+.icon-white { color: var(--icon-color-white); }
+.icon-inverse { color: var(--icon-color-white); }
+
+/* When used inside a colored container, inherit color */
+.icon-inherit { color: inherit; }

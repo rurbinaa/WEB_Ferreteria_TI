@@ -26,6 +26,18 @@
   --color-stock-bajo: var(--color-warning);
   --color-stock-agotado: var(--color-danger);
 
+  /* Icon system */
+  --icon-color: var(--color-text);
+  --icon-color-muted: var(--color-text-muted);
+  --icon-color-primary: var(--color-primary);
+  --icon-color-white: var(--color-text-inverse);
+  --icon-size-xs: 12px;
+  --icon-size-sm: 16px;
+  --icon-size-md: 18px;
+  --icon-size-lg: 20px;
+  --icon-size-xl: 24px;
+  --icon-size-2xl: 40px;
+
   --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
   --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
   --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
@@ -61,4 +73,33 @@
   --space-8: 2rem;
   --space-10: 2.5rem;
   --space-12: 3rem;
+}
+
+/* Dark mode support (opt-in via data-theme="dark" on <html> or prefers-color-scheme) */
+[data-theme="dark"],
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-primary: #3b82f6;
+    --color-primary-hover: #2563eb;
+    --color-primary-light: #1e3a5f;
+    --color-success: #22c55e;
+    --color-success-light: #14532d;
+    --color-warning: #f59e0b;
+    --color-warning-light: #78350f;
+    --color-danger: #ef4444;
+    --color-danger-light: #7f1d1d;
+    --color-info: #06b6d4;
+    --color-info-light: #164e63;
+
+    --color-bg: #0f172a;
+    --color-bg-card: #1e293b;
+    --color-bg-hover: #334155;
+    --color-border: #334155;
+    --color-border-strong: #475569;
+
+    --color-text: #f1f5f9;
+    --color-text-secondary: #cbd5e1;
+    --color-text-muted: #94a3b8;
+    --color-text-inverse: #0f172a;
+  }
 }
