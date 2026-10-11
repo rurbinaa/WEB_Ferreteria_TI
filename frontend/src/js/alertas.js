@@ -124,10 +124,10 @@ function renderAlertas(alertas) {
       <td><span class="badge badge-confianza-${a.confianza || ALERTAS_CONFIANZA.NORMAL}">${a.confianza === ALERTAS_CONFIANZA.BAJA ? '⚠ Baja' : '✓ Normal'}</span></td>
       <td><span class="badge ${a.estado === ALERTAS_ESTADO.PENDIENTE ? 'badge-warning' : 'badge-success'}">${a.estado === ALERTAS_ESTADO.PENDIENTE ? 'Pendiente' : 'Atendida'}</span></td>
       <td>${formatDate(a.fecha_creada)}</td>
-      <td class="text-end">
+<td class="text-end">
         ${a.estado === ALERTAS_ESTADO.PENDIENTE ? `
           <button class="btn btn-sm btn-primary" data-action="atender" data-id="${a.id}" aria-label="Atender alerta de ${escapeHtml(a.producto?.nombre || '')}">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <svg class="icon icon-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
               <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
               <polyline points="22 4 12 14.01 9 11.01"></polyline>
             </svg>

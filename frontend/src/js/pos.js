@@ -141,12 +141,12 @@ function performSearch(query) {
           </span>
         </div>
       </div>
-      <button class="search-result-add" aria-label="Agregar ${escapeHtml(producto.nombre)}" ${producto.stock_actual <= 0 ? 'disabled' : ''}>
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <line x1="12" y1="5" x2="12" y2="19"></line>
-          <line x1="5" y1="12" x2="19" y2="12"></line>
-        </svg>
-      </button>
+<button class="search-result-add" aria-label="Agregar ${escapeHtml(producto.nombre)}" ${producto.stock_actual <= 0 ? 'disabled' : ''}>
+          <svg class="icon icon-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <line x1="12" y1="5" x2="12" y2="19"></line>
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+          </svg>
+        </button>
     </div>
   `).join('');
   
@@ -262,18 +262,18 @@ function renderCart() {
         <div class="invoice-line-sku">${escapeHtml(item.codigo)}</div>
       </div>
       <div class="invoice-line-price">${formatCurrency(item.precio)}</div>
-      <div class="invoice-line-qty">
+<div class="invoice-line-qty">
         <button class="qty-btn" data-action="decrease" aria-label="Disminuir cantidad" ${item.cantidad <= 1 ? 'disabled' : ''}>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+          <svg class="icon icon-muted" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
         </button>
         <input type="number" class="qty-input" value="${item.cantidad}" min="1" max="${item.stock_disponible}" aria-label="Cantidad">
         <button class="qty-btn" data-action="increase" aria-label="Aumentar cantidad" ${item.cantidad >= item.stock_disponible ? 'disabled' : ''}>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+          <svg class="icon icon-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
         </button>
       </div>
       <div class="invoice-line-subtotal">${formatCurrency(item.subtotal)}</div>
       <button class="invoice-line-remove" aria-label="Eliminar ${escapeHtml(item.nombre)}">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+        <svg class="icon icon-danger" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
       </button>
     </div>
   `).join('');
