@@ -334,13 +334,6 @@
   font-weight: 700;
   color: var(--color-text);
   margin: 0;
-  border-bottom: none;
-  padding-bottom: 0;
-}
-
-h1.page-title, .page-header h1 {
-  border-bottom: none;
-  padding-bottom: 0;
 }
 
 .page-actions {

@@ -21,7 +21,7 @@ function initTheme() {
   return theme;
 }
 
-export function toggleTheme() {
+function toggleTheme() {
   const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
   const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
   document.documentElement.setAttribute('data-theme', newTheme);

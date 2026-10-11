@@ -43,7 +43,7 @@
       <header class="workspace-header">
         <div>
           <h1 class="workspace-title">Nueva Venta</h1>
-          <p class="workspace-subtitle">Buscar · Agregar · Confirmar · Limpiar</p>
+          <p class="workspace-subtitle">F2 buscar · Enter agregar · F8 confirmar · Esc limpiar</p>
         </div>
         <div class="workspace-actions">
           <button class="btn btn-secondary btn-sm" id="btn-new-sale" aria-label="Nueva factura">
@@ -62,7 +62,7 @@
       <div class="workspace-body two-cols">
         <section class="panel" aria-label="Buscar productos">
           <header class="panel-header">
-            <h2 class="panel-title">Buscar Producto</h2>
+            <h2 class="panel-title">Buscar Producto <kbd class="kbd ms-2">F2</kbd></h2>
           </header>
           <div class="panel-body">
             <div class="search-box">
@@ -74,6 +74,7 @@
                 <input type="search" id="search-input" class="form-control" 
                        placeholder="Código o nombre del producto..." 
                        autocomplete="off" aria-label="Buscar producto por código o nombre">
+                <kbd class="search-shortcut">F2</kbd>
               </div>
             </div>
             <div id="search-results" class="search-results" role="listbox" aria-label="Resultados de búsqueda"></div>
@@ -109,7 +110,7 @@
                 <polyline points="10 9 9 9 8 9"></polyline>
               </svg>
               <p class="invoice-empty-title">Factura vacía</p>
-              <p class="invoice-empty-hint">Busca un producto y presiona Enter para agregarlo</p>
+              <p class="invoice-empty-hint">Busca un producto (F2) y presiona Enter para agregarlo</p>
             </div>
           </div>
           
@@ -130,11 +131,11 @@
             </div>
             
             <div class="invoice-actions">
-              <button type="button" id="btn-confirm-sale" class="btn btn-success btn-lg" disabled aria-label="Confirmar venta">
-                Confirmar Venta
+              <button type="button" id="btn-confirm-sale" class="btn btn-success btn-lg" disabled aria-label="Confirmar venta (F8)">
+                <kbd class="kbd me-1">F8</kbd> Confirmar Venta
               </button>
-              <button type="button" id="btn-clear-sale" class="btn btn-outline-secondary btn-lg" aria-label="Limpiar factura">
-                Nueva Factura
+              <button type="button" id="btn-clear-sale" class="btn btn-outline-secondary btn-lg" aria-label="Limpiar factura (Esc)">
+                <kbd class="kbd me-1">Esc</kbd> Nueva Factura
               </button>
             </div>
           </footer>
