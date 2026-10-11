@@ -108,7 +108,7 @@ export async function handleLogin(form) {
   }
 
   btn.disabled = true;
-  btn.innerHTML = '<span class="spinner spinner-sm"></span> Entrando...';
+  btn.classList.add('loading');
   if (errorEl) errorEl.classList.add('d-none');
 
   try {
@@ -118,8 +118,8 @@ export async function handleLogin(form) {
   } catch (error) {
     showError(error.message || 'Usuario o contraseña incorrectos');
   } finally {
-    btn.disabled = false;
-    btn.textContent = 'Entrar';
+    btn.disabled = true;
+    btn.classList.remove('loading');
   }
 
   function showError(msg) {
@@ -155,6 +155,14 @@ if (document.getElementById('login-form')) {
   document.getElementById('login-form').addEventListener('submit', (e) => {
     e.preventDefault();
     handleLogin(e.target);
+  });
+
+  const togglePassword = document.getElementById('toggle-password');
+  const passwordInput = document.getElementById('password');
+  togglePassword?.addEventListener('click', () => {
+    const visible = passwordInput.type === 'text';
+    passwordInput.type = visible ? 'password' : 'text';
+    togglePassword.setAttribute('aria-label', visible ? 'Mostrar contraseña' : 'Ocultar contraseña');
   });
 
   const urlParams = new URLSearchParams(window.location.search);

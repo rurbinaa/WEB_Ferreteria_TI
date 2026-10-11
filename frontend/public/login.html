@@ -6,7 +6,7 @@
   <title>Iniciar Sesión - Sistema Ferretería</title>
   <link rel="stylesheet" href="../src/lib/bootstrap/bootstrap.min.css">
   <link rel="stylesheet" href="../src/lib/bootstrap-icons/bootstrap-icons.css">
-  <link rel="stylesheet" href="../src/css/styles.css">
+  <link rel="stylesheet" href="../src/css/07-login.css">
   <script src="../src/lib/bootstrap/bootstrap.bundle.min.js"></script>
 </head>
 <body>
@@ -82,7 +82,7 @@
 
         <form id="login-form" class="login-form" novalidate>
           <div id="login-error" class="alert alert-danger d-none" role="alert">
-            <svg class="alert-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
               <circle cx="12" cy="12" r="10"></circle>
               <line x1="12" y1="8" x2="12" y2="12"></line>
               <line x1="12" y1="16" x2="12.01" y2="16"></line>
@@ -93,21 +93,26 @@
           <div class="form-group">
             <label for="username" class="form-label">Usuario</label>
             <div class="form-input-wrapper">
-              <input type="text" id="username" name="username" class="form-input" 
-                     placeholder=" " required autocomplete="username" autofocus>
-              <span class="form-floating-label">Usuario</span>
-              <span class="form-underline"></span>
-              <div class="invalid-feedback">El usuario es requerido</div>
+                <svg class="field-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecaper="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+                </svg>
+                <input type="text" id="username" name="username" class="form-input" placeholder="Tu Usuario" required autocomplete="username" autofocus>
             </div>
           </div>
 
           <div class="form-group">
             <label for="password" class="form-label">Contraseña</label>
             <div class="form-input-wrapper">
+              <svg class="field-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+              </svg>
               <input type="password" id="password" name="password" class="form-input" 
-                     placeholder=" " required autocomplete="current-password">
-              <span class="form-floating-label">Contraseña</span>
-              <span class="form-underline"></span>
+                     placeholder="Tu contraseña" required autocomplete="current-password">
+              <button type="button" id="toggle-password" class="toggle-password" aria-label="Mostrar contraseña">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>
+                </svg>
+              </button>
               <div class="invalid-feedback">La contraseña es requerida</div>
             </div>
           </div>
@@ -115,7 +120,7 @@
           <button type="submit" id="login-btn" class="btn-login">
             <span class="btn-text">Entrar</span>
             <span class="btn-loading">
-              <svg class="spinner" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <svg class="login-spinner" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
                 <circle cx="12" cy="12" r="10" stroke-opacity="0.25"></circle>
                 <path d="M12 2a10 10 0 0 1 10 10" stroke-opacity="1" stroke-linecap="round"></path>
               </svg>
@@ -124,6 +129,7 @@
         </form>
 
         <footer class="login-footer">
+          <p class="login-footer-text">¿Problemas para entrar? Contacta con el administrador.</p>
           <p class="login-footer-text">Ferretería — Sistema de Gestión v1.0</p>
         </footer>
       </div>
