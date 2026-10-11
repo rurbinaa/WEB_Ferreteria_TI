@@ -8,8 +8,8 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: var(--font-sans);
-  background: var(--color-bg);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg);
 }
 
 /* Lado izquierdo - Imagen/Background (70% en desktop) */
@@ -37,11 +37,10 @@
   position: absolute;
   inset: 0;
   background: 
-    radial-gradient(ellipse at 20% 80%, var(--color-primary) 0%, transparent 55%),
-    radial-gradient(ellipse at 80% 20%, var(--color-success) 0%, transparent 55%),
-    radial-gradient(ellipse at 50% 50%, var(--color-warning) 0%, transparent 70%);
+    radial-gradient(ellipse at 20% 80%, rgba(37, 99, 235, 0.18) 0%, transparent 55%),
+    radial-gradient(ellipse at 80% 20%, rgba(16, 185, 129, 0.12) 0%, transparent 55%),
+    radial-gradient(ellipse at 50% 50%, rgba(245, 158, 11, 0.08) 0%, transparent 70%);
   pointer-events: none;
-  opacity: 0.15;
 }
 
 .login-bg-content {
@@ -50,21 +49,20 @@
   padding: 4rem;
   max-width: 500px;
   width: 100%;
-  color: var(--icon-color-white);
+  color: #ffffff;
   text-align: center;
 }
 
 .login-bg-icon {
-  width: var(--icon-size-2xl);
-  height: var(--icon-size-2xl);
+  width: 80px;
+  height: 80px;
   margin: 0 auto 1.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--color-primary);
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-hover) 100%);
   border-radius: 20px;
   box-shadow: 0 12px 32px rgba(37, 99, 235, 0.4);
-  color: var(--icon-color-white);
 }
 
 .login-bg-title {
@@ -100,7 +98,8 @@
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 10px;
-  transition: background 0.35s ease, border-color 0.35s ease, transform 0.35s ease;
+  backdrop-filter: blur(10px);
+    transition: background 0.35s ease, border-color 0.35s ease, transform 0.35s ease;
 }
 
 .login-bg-feature:hover {
@@ -116,9 +115,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--color-primary-light);
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-hover) 100%);
   border-radius: 10px;
-  color: var(--icon-color-primary);
+  color: #ffffff;
   box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
 }
 
@@ -126,10 +125,11 @@
   flex: 1;
 }
 
+/* Textos un poco más grandes para que se lean mejor */
 .login-bg-feature-label {
   font-size: 0.9375rem;
   font-weight: 600;
-  color: var(--icon-color-white);
+  color: #ffffff;
   margin: 0 0 0.25rem;
 }
 
@@ -144,13 +144,13 @@
 .login-form-side {
   width: 30%;
   height: 100%;
-  background: var(--color-bg-card);
+  background: var(--white);
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 2.5rem;
   box-shadow: var(--shadow);
-  overflow-y: auto;
+  overflow-y: auto;            /* antes: hidden (cortaba el formulario en pantallas bajas) */
   flex-shrink: 0;
 }
 
@@ -167,14 +167,14 @@
 .login-form-title {
   font-size: 1.75rem;
   font-weight: 700;
-  color: var(--color-text);
+  color: var(--text);
   margin: 0 0 0.5rem;
   letter-spacing: -0.02em;
 }
 
 .login-form-subtitle {
   font-size: 0.9375rem;
-  color: var(--color-text-secondary);
+  color: var(--text-secondary);
   margin: 0;
 }
 
@@ -193,7 +193,7 @@
 .form-label {
   font-size: 0.875rem;
   font-weight: 600;
-  color: var(--color-text);
+  color: var(--text);
 }
 
 /* ===== Inputs: etiqueta fija arriba + caja con icono (sin label flotante) ===== */
@@ -208,7 +208,7 @@
   top: 14px;
   width: 20px;
   height: 20px;
-  color: var(--icon-color-muted);
+  color: var(--text-muted);
   pointer-events: none;
 }
 
@@ -219,16 +219,16 @@
   padding: 0 14px 0 44px;
   font: inherit;
   font-size: 1rem;
-  color: var(--color-text);
-  background: var(--color-bg-card);
-  border: 1px solid var(--color-border);
+  color: var(--text);
+  background: var(--white);
+  border: 1px solid var(--border);
   border-radius: 10px;
   outline: none;
   transition: var(--transition);
 }
 
 .form-input::placeholder {
-  color: var(--icon-color-muted);
+  color: var(--text-muted);
   opacity: 0.4;
 }
 
@@ -237,17 +237,17 @@
 }
 
 .form-input:focus {
-  border-color: var(--color-primary);
-  box-shadow: 0 0 0 4px var(--color-primary-light);
+  border-color: var(--primary);
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.18);
 }
 
 .form-input.is-invalid,
 .form-input.is-invalid:focus {
-  border-color: var(--color-danger);
+  border-color: var(--error);
 }
 
 .form-input.is-invalid:focus {
-  box-shadow: 0 0 0 4px var(--color-danger-light);
+  box-shadow: 0 0 0 4px rgba(220, 38, 38, 0.15);
 }
 
 /* Botón ver / ocultar contraseña */
@@ -263,7 +263,7 @@
   border: 0;
   border-radius: 8px;
   background: transparent;
-  color: var(--icon-color-muted);
+  color: var(--text-muted);
   cursor: pointer;
   transition: var(--transition);
 }
@@ -271,24 +271,22 @@
 .toggle-password svg {
   width: 20px;
   height: 20px;
-  stroke: currentColor;
-  fill: none;
 }
 
 .toggle-password:hover {
-  color: var(--icon-color);
+  color: var(--text);
   background: rgba(100, 116, 139, 0.12);
 }
 
 .toggle-password:focus-visible {
-  outline: 2px solid var(--color-primary);
+  outline: 2px solid var(--primary);
   outline-offset: 1px;
 }
 
 .invalid-feedback {
   display: none;
   font-size: 0.8125rem;
-  color: var(--color-danger);
+  color: var(--error);
   margin-top: 0.375rem;
 }
 
@@ -302,8 +300,8 @@
   padding: 1rem 1.5rem;
   font-size: 1rem;
   font-weight: 600;
-  color: var(--icon-color-white);
-  background: var(--color-primary);
+  color: var(--white);
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-hover) 100%);
   border: none;
   border-radius: 10px;
   cursor: pointer;
@@ -313,7 +311,7 @@
 }
 
 .btn-login:hover:not(:disabled) {
-  background: var(--color-primary-hover);
+  background: linear-gradient(135deg, var(--primary-hover) 0%, #1e40af 100%);
   box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4);
   transform: translateY(-1px);
 }
@@ -349,12 +347,10 @@
   gap: 0.5rem;
 }
 
-/* El spinner es un SVG con trazo: usa currentColor */
+/* El spinner es un SVG con trazo: ya no lleva borde propio (antes se veía doble) */
 .login-spinner {
   width: 22px;
   height: 22px;
-  stroke: currentColor;
-  fill: none;
   animation: spin 0.8s linear infinite;
 }
 
@@ -370,15 +366,13 @@
   padding: 0.875rem 1rem;
   border-radius: 10px;
   font-size: 0.875rem;
-  margin-bottom: 0;
+  margin-bottom: 0;            /* el gap de .login-form ya separa */
 }
 
 .alert svg {
   flex-shrink: 0;
   width: 18px;
   height: 18px;
-  stroke: currentColor;
-  fill: none;
 }
 
 .alert.d-none {
@@ -386,17 +380,15 @@
 }
 
 .alert-danger {
-  background: var(--color-danger-light);
-  border: 1px solid var(--color-danger);
-  color: var(--color-danger);
+  background: var(--error-bg);
+  border: 1px solid var(--error-border);
+  color: #991b1b;
 }
 
 .alert-icon {
   flex-shrink: 0;
   width: 18px;
   height: 18px;
-  stroke: currentColor;
-  fill: none;
 }
 
 /* ===== Pie ===== */
@@ -404,33 +396,15 @@
   margin-top: 2rem;
   text-align: center;
   padding-top: 1.5rem;
-  border-top: 1px solid var(--color-border);
+  border-top: 1px solid var(--border);
 }
 
 .login-footer-text {
   font-size: 0.8125rem;
   line-height: 1.6;
-  color: var(--color-text-secondary);
+  color: var(--text-secondary);   /* antes --text-muted: poco contraste */
   margin: 0;
 }
-
-/* ===== Icon Utility Classes (para uso en HTML) ===== */
-.icon {
-  width: var(--icon-size-md);
-  height: var(--icon-size-md);
-  stroke: currentColor;
-  fill: none;
-}
-
-.icon-xs { width: var(--icon-size-xs); height: var(--icon-size-xs); }
-.icon-sm { width: var(--icon-size-sm); height: var(--icon-size-sm); }
-.icon-lg { width: var(--icon-size-lg); height: var(--icon-size-lg); }
-.icon-xl { width: var(--icon-size-xl); height: var(--icon-size-xl); }
-.icon-2xl { width: var(--icon-size-2xl); height: var(--icon-size-2xl); }
-
-.icon-muted { color: var(--icon-color-muted); }
-.icon-primary { color: var(--icon-color-primary); }
-.icon-white { color: var(--icon-color-white); }
 
 /* Responsive */
 @media (max-width: 1024px) {
