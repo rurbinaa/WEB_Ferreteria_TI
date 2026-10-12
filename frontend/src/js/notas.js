@@ -24,6 +24,12 @@ function dateLabel(value) {
 function rotation(id) { return (([...id].reduce((sum, char) => sum + char.charCodeAt(0), 0) % 5) - 2) * 0.8; }
 
 function createShell() {
+  if (!document.getElementById('notas-styles')) {
+    const styles = document.createElement('link');
+    styles.id = 'notas-styles'; styles.rel = 'stylesheet';
+    styles.href = new URL('../css/notas.css', import.meta.url).href;
+    document.head.appendChild(styles);
+  }
   layer = document.createElement('aside'); layer.id = 'notas-layer'; layer.setAttribute('aria-label', 'Notas adhesivas');
   const palette = document.createElement('div'); palette.className = 'notas-palette'; palette.setAttribute('aria-label', 'Crear nota');
   COLORS.forEach(color => {

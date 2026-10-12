@@ -22,7 +22,7 @@ function ensureSpinnerOverlay() {
   return spinnerOverlay;
 }
 
-export function showToast(message, type = 'info', title = null) {
+export function showToast(message, type = 'info', title = null, duration = 4000) {
   const container = ensureToastContainer();
   
   const toast = document.createElement('div');
@@ -54,7 +54,7 @@ export function showToast(message, type = 'info', title = null) {
     removeToast(toast);
   });
   
-  setTimeout(() => removeToast(toast), 4000);
+  setTimeout(() => removeToast(toast), duration);
   
   return toast;
 }
