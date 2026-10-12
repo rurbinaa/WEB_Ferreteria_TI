@@ -10,12 +10,11 @@ import {
   KEYBOARD_SHORTCUTS,
   DEBOUNCE_MS,
   SYNC_INTERVAL_MS,
-  TOAST_DURATION_MS
+  TOAST_DURATION_MS,
+  USE_REAL_API
 } from './config.js';
 
-const USE_MOCK = true;
-
-export const api = USE_MOCK ? mockApi : realApi;
+export const api = USE_REAL_API ? realApi : mockApi;
 
 // Re-export config constants
 export { 
@@ -31,10 +30,10 @@ export {
   TOAST_DURATION_MS
 };
 
-export function setUseMock(useMock) {
-  if (useMock !== USE_MOCK) {
-    console.warn('USE_MOCK es constante en build. Cambia USE_MOCK en apiFactory.js y recarga.');
-  }
+export function setUseRealAPI(useReal) {
+  // Esta función requiere recarga para tomar efecto
+  localStorage.setItem('ferreteria_use_real_api', useReal.toString());
+  window.location.reload();
 }
 
 export default api;

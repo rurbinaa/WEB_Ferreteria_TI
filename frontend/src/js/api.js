@@ -1,7 +1,8 @@
-import { API_BASE_URL, ENDPOINTS, STORAGE_KEYS } from './config.js';
+import { API_BASE_URL, ENDPOINTS, STORAGE_KEYS, USE_REAL_API } from './config.js';
 
 let authToken = null;
 let currentUser = null;
+let refreshPromise = null;
 
 function getToken() {
   if (!authToken) {
@@ -43,6 +44,14 @@ function clearAuth() {
   currentUser = null;
   sessionStorage.removeItem(STORAGE_KEYS.TOKEN);
   sessionStorage.removeItem(STORAGE_KEYS.USER);
+  sessionStorage.removeItem(STORAGE_KEYS.POS_CART);
+  sessionStorage.removeItem(STORAGE_KEYS.VENTA_BORRADOR);
+}
+
+async function refreshToken() {
+  // El backend no tiene refresh token, el JWT expira en 480min (8h)
+  // Si el token expira, el usuario debe volver a loguearse
+  return false;
 }
 
 async function request(endpoint, options = {}) {
@@ -65,6 +74,7 @@ async function request(endpoint, options = {}) {
   try {
     const response = await fetch(url, config);
 
+    // Manejar 401: token expirado o inválido
     if (response.status === 401) {
       clearAuth();
       if (!window.location.pathname.endsWith('login.html') && !window.location.pathname.endsWith('index.html')) {
@@ -86,7 +96,8 @@ async function request(endpoint, options = {}) {
     }
 
     if (!response.ok) {
-      const errorMsg = data?.error || data?.message || `Error ${response.status}`;
+      // Normalizar errores del backend (FastAPI devuelve { error, detalle })
+      const errorMsg = data?.error || data?.detail || data?.message || `Error ${response.status}`;
       const error = new Error(errorMsg);
       error.status = response.status;
       error.detail = data?.detalle;
@@ -104,6 +115,53 @@ async function request(endpoint, options = {}) {
   }
 }
 
+// Login usando JSON (según especificación del backend)
+async function login(credentials) {
+  const response = await fetch(`${API_BASE_URL}${ENDPOINTS.auth.login}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      nombre_usuario: credentials.nombre_usuario,
+      password: credentials.password
+    }),
+  });
+
+  if (response.status === 401) {
+    const data = await response.json().catch(() => ({}));
+    throw new Error(data?.error || data?.detail || 'Usuario o contraseña incorrectos');
+  }
+
+  if (!response.ok) {
+    const data = await response.json().catch(() => ({}));
+    throw new Error(data?.error || data?.detail || `Error ${response.status}`);
+  }
+
+  const data = await response.json();
+  if (data.access_token) {
+    setToken(data.access_token);
+    const user = await getMe();
+    setUser(user);
+    return user;
+  }
+  throw new Error('Respuesta de login inválida');
+}
+
+async function getMe() {
+  const response = await fetch(`${API_BASE_URL}${ENDPOINTS.auth.me}`, {
+    headers: {
+      'Authorization': `Bearer ${getToken()}`
+    }
+  });
+  
+  if (!response.ok) {
+    throw new Error('No autenticado');
+  }
+  
+  return response.json();
+}
+
 export const api = {
   get: (endpoint) => request(endpoint, { method: 'GET' }),
   post: (endpoint, body) => request(endpoint, { method: 'POST', body: JSON.stringify(body) }),
@@ -116,22 +174,8 @@ export const api = {
   setUser,
   getUser,
   clearAuth,
-
-  async login(credentials) {
-    const data = await this.post(ENDPOINTS.auth.login, credentials);
-    if (data.access_token) {
-      setToken(data.access_token);
-      const user = await this.get(ENDPOINTS.auth.me);
-      setUser(user);
-      return user;
-    }
-    throw new Error('Respuesta de login inválida');
-  },
-
-  async logout() {
-    clearAuth();
-    window.location.href = 'login.html';
-  },
+  login,
+  logout: () => { clearAuth(); window.location.href = 'login.html'; },
 
   isAuthenticated() {
     return !!getToken();
@@ -143,11 +187,11 @@ export const api = {
   },
 
   isAdmin() {
-    return this.hasRole(ROLES.ADMIN);
+    return this.hasRole('admin');
   },
 
   isVendedor() {
-    return this.hasRole(ROLES.VENDEDOR);
+    return this.hasRole('vendedor');
   },
 
   getCurrentUser() {

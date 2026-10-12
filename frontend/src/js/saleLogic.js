@@ -168,8 +168,7 @@ export async function confirmSale() {
     client_uuid: clientUuid,
     items: currentCart.map(item => ({
       producto_codigo: item.codigo,
-      cantidad: item.cantidad,
-      precio_unitario: item.precio
+      cantidad: item.cantidad
     }))
   };
   

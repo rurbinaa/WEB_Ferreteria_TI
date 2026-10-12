@@ -1,4 +1,25 @@
-export const API_BASE_URL = '';
+export const API_BASE_URL = 'http://localhost:8000';
+
+// Flag para alternar entre API real y mock (configurable via localStorage o URL)
+// Por defecto usa mock para desarrollo sin backend
+export const USE_REAL_API = (() => {
+  // Prioridad: 1. URL param ?api=real|mock  2. localStorage  3. default false
+  const urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.has('api')) {
+    return urlParams.get('api') === 'real';
+  }
+  const stored = localStorage.getItem('ferreteria_use_real_api');
+  if (stored !== null) {
+    return stored === 'true';
+  }
+  return false;
+})();
+
+// Función para cambiar el modo en runtime (requiere recarga)
+export function setUseRealAPI(useReal) {
+  localStorage.setItem('ferreteria_use_real_api', useReal.toString());
+  window.location.reload();
+}
 
 export const ENDPOINTS = {
   auth: {
