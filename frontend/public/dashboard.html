@@ -48,7 +48,7 @@
       </div>
       
       <div class="dashboard-grid">
-        <section class="chart-container" aria-label="Ventas por día">
+        <section class="chart-container" aria-label="Ventas por día" style="grid-column: span 2;">
           <header class="chart-header">
             <h2 class="chart-title">Ventas últimos 7 días</h2>
           </header>
@@ -57,7 +57,7 @@
           </div>
         </section>
         
-        <section class="chart-container" aria-label="Top 5 productos">
+        <section class="chart-container" aria-label="Top 5 productos" style="grid-column: span 2;">
           <header class="chart-header">
             <h2 class="chart-title">Top 5 productos vendidos</h2>
           </header>
@@ -66,7 +66,7 @@
           </div>
         </section>
         
-        <section class="alerts-quick" aria-label="Alertas de reposición pendientes">
+        <section class="alerts-quick" aria-label="Alertas de reposición pendientes" style="grid-column: span 2;">
           <header class="alerts-quick-header">
             <h3 class="alerts-quick-title">Alertas de Reposición Pendientes</h3>
             <a href="alertas.html" class="alerts-quick-link">Ver todas</a>
@@ -75,47 +75,6 @@
             <div class="empty-state" style="padding: var(--space-6);">
               <div class="spinner mx-auto"></div>
               <p class="empty-state-title mt-2">Cargando alertas...</p>
-            </div>
-          </div>
-        </section>
-        
-        <section class="card" style="grid-column: 1 / -1;" aria-label="Accesos rápidos">
-          <header class="card-header">
-            <h3 class="card-title" style="margin:0;font-size:0.875rem;">Accesos Rápidos</h3>
-          </header>
-          <div class="card-body">
-            <div class="d-flex gap-3 flex-wrap">
-              <a href="venta.html" class="btn btn-primary">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                  <polyline points="14 2 14 8 20 8"></polyline>
-                </svg>
-                Nueva Venta
-              </a>
-              <a href="productos.html" class="btn btn-secondary">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
-                  <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
-                  <line x1="12" y1="22.08" x2="12" y2="12"></line>
-                </svg>
-                Productos
-              </a>
-              <a href="proveedores.html" class="btn btn-secondary">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
-                  <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
-                  <line x1="12" y1="22.08" x2="12" y2="12"></line>
-                </svg>
-                Entradas Proveedores
-              </a>
-              <a href="alertas.html" class="btn btn-warning">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
-                  <line x1="12" y1="9" x2="12" y2="13"></line>
-                  <line x1="12" y1="17" x2="12.01" y2="17"></line>
-                </svg>
-                Alertas y Bitácora
-              </a>
             </div>
           </div>
         </section>

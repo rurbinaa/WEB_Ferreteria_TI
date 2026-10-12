@@ -44,7 +44,7 @@
         const user = await api.get('/auth/me');
         api.setUser(user);
 
-        const redirectUrl = user.rol === ROLES.ADMIN ? 'dashboard.html' : 'venta.html';
+        const redirectUrl = user.rol === ROLES.ADMIN ? 'dashboard.html' : 'historial.html';
         window.location.href = redirectUrl;
       } catch (error) {
         api.clearAuth();

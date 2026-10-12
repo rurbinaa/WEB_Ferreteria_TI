@@ -58,7 +58,6 @@
             Nuevo Proveedor
           </button>
         </header>
-        
         <div class="table-wrapper">
           <table class="table table-hover" id="proveedores-table" role="grid" aria-label="Lista de proveedores">
             <thead>
@@ -101,7 +100,7 @@
         <form id="entrada-form" class="card" style="max-width: 800px; margin-bottom: var(--space-6);" novalidate>
           <div class="card-body">
             <div class="row g-3">
-              <div class="col-md-4">
+              <div class="col-md-3">
                 <label for="e_producto_id" class="form-label">Producto *</label>
                 <select id="e_producto_id" class="form-select" required aria-label="Seleccionar producto">
                   <option value="">Seleccionar producto...</option>
@@ -115,8 +114,11 @@
               </div>
               <div class="col-md-3">
                 <label for="e_costo_unitario" class="form-label">Costo Unitario *</label>
-                <input type="number" id="e_costo_unitario" class="form-control" step="0.01" min="0.01" required aria-label="Costo unitario">
-                <div class="invalid-feedback">Costo debe ser mayor a 0</div>
+                <div class="input-group">
+                  <span class="input-group-text">C$</span>
+                  <input type="number" id="e_costo_unitario" class="form-control" step="0.01" min="0.01" required aria-label="Costo unitario en córdobas nicaragüenses">
+                  <div class="invalid-feedback">Costo debe ser mayor a 0</div>
+                </div>
               </div>
               <div class="col-md-3">
                 <label for="e_proveedor_id" class="form-label">Proveedor *</label>
@@ -124,6 +126,14 @@
                   <option value="">Seleccionar proveedor...</option>
                 </select>
                 <div class="invalid-feedback">Selecciona un proveedor</div>
+              </div>
+            </div>
+            <div class="row g-3 mt-2">
+              <div class="col-md-11">
+                <div class="entrada-total-preview d-flex align-items-center gap-3 p-3 bg-light rounded">
+                  <span class="text-muted">Total estimado:</span>
+                  <span id="entrada-total-preview" class="fw-bold fs-5 text-primary">C$ 0.00</span>
+                </div>
               </div>
             </div>
             <div class="mt-3">

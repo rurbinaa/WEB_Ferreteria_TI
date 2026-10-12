@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Historial de Ventas - Sistema Ferretería</title>
+  <link rel="stylesheet" href="../src/lib/bootstrap/bootstrap.min.css">
+  <link rel="stylesheet" href="../src/lib/bootstrap-icons/bootstrap-icons.css">
+  <link rel="stylesheet" href="../src/css/styles.css">
+  <script src="../src/lib/bootstrap/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar" role="banner">
+      <a href="dashboard.html" class="topbar-brand" aria-label="Ferretería - Inicio">
+        <span class="topbar-brand-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+            <path d="M2 17l10 5 10-5"></path>
+            <path d="M2 12l10 5 10-5"></path>
+          </svg>
+        </span>
+        <span>Ferretería</span>
+      </a>
+      
+      <nav class="topbar-nav" id="topbar-nav" role="navigation" aria-label="Navegación principal">
+      </nav>
+      
+      <div class="topbar-user" id="topbar-user">
+      </div>
+    </header>
+    
+    <main class="workspace" role="main">
+      <header class="page-header">
+        <a href="dashboard.html" class="btn btn-ghost btn-sm d-md-none mb-3" style="width: 100%;" aria-label="Volver al Dashboard">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="me-2">
+            <path d="M19 12H5"></path>
+            <path d="M12 19l-7-7 7-7"></path>
+          </svg>
+          Volver al Dashboard
+        </a>
+        <h1 class="page-title">Historial de Ventas</h1>
+      </header>
+      
+      <div class="filters-bar" role="search" aria-label="Filtros de historial">
+        <div class="d-flex gap-2 flex-wrap">
+          <label for="historial-fecha" class="form-label d-flex align-items-center mb-0">Fecha:</label>
+          <input type="date" id="historial-fecha" class="form-control" style="width: auto; min-width: 180px;" aria-label="Filtrar por fecha">
+          <span id="historial-totales" class="badge badge-secondary d-flex align-items-center ms-auto" style="font-size: 0.8125rem;">
+            <span id="historial-total-ventas">Total: C$ 0.00</span>
+            <span class="mx-2">|</span>
+            <span id="historial-cantidad-ventas">0 ventas</span>
+          </span>
+        </div>
+      </div>
+      
+      <div class="table-wrapper">
+        <table class="table table-hover" id="historial-table" role="grid" aria-label="Historial de ventas">
+          <thead>
+            <tr>
+              <th scope="col">Fecha y Hora</th>
+              <th scope="col">Nº Factura</th>
+              <th scope="col">Cliente</th>
+              <th scope="col">Vendedor</th>
+              <th scope="col" class="text-end">Total</th>
+              <th scope="col">Estado</th>
+            </tr>
+          </thead>
+          <tbody id="historial-table-body"></tbody>
+        </table>
+        <div id="historial-empty" class="empty-state d-none" style="padding: var(--space-8);">
+          <svg class="empty-state-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <line x1="16" y1="13" x2="8" y2="13"></line>
+            <line x1="16" y1="17" x2="8" y2="17"></polyline>
+            <polyline points="10 9 9 9 8 9"></polyline>
+          </svg>
+          <p class="empty-state-title">Sin ventas en el período</p>
+          <p class="empty-state-message">No hay ventas registradas para la fecha seleccionada</p>
+        </div>
+      </div>
+    </main>
+  </div>
+  
+  <script type="module" src="../src/js/auth.js"></script>
+  <script type="module" src="../src/js/historial.js"></script>
+  <script type="module" src="../src/js/app.js"></script>
+</body>
+</html>

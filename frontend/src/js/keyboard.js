@@ -55,3 +55,8 @@ export function registerGlobalShortcut(key, callback, options = {}) {
     }
   });
 }
+
+// Global shortcut for opening venta modal (N key)
+export function registerVentaModalShortcut(openModalCallback) {
+  registerGlobalShortcut('n', openModalCallback);
+}

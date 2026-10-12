@@ -23,6 +23,9 @@ let accionesCache = [];
 function init() {
   setupTabs();
   setupEventListeners();
+  // Set default filter to 'pendiente'
+  filterAlertaEstado.value = 'pendiente';
+  alertasFilters.estado = 'pendiente';
   loadAlertas();
   loadBitacora();
   loadAccionesForFilter();
@@ -114,31 +117,60 @@ function renderAlertas(alertas) {
   }
   
   alertasEmpty.classList.add('d-none');
-  alertasTableBody.innerHTML = alertas.map(a => `
+  
+  // Sort by urgency: stock 0 (agotado) first, then stock <= minimo (bajo), then ok
+  const sortedAlertas = [...alertas].sort((a, b) => {
+    const classA = getStockClass(a.stock_al_generar, a.producto?.stock_minimo);
+    const classB = getStockClass(b.stock_al_generar, b.producto?.stock_minimo);
+    const urgency = { agotado: 0, bajo: 1, ok: 2 };
+    return urgency[classA] - urgency[classB];
+  });
+  
+  const warningIcon = '<svg class="icon icon-warning" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>';
+  const successIcon = '<svg class="icon icon-success" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+  
+  const atenderBtn = (id, nombre) => `
+    <button class="btn btn-sm btn-primary" data-action="atender" data-id="${id}" aria-label="Atender alerta de ${escapeHtml(nombre)}">
+      <svg class="icon icon-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+        <polyline points="22 4 12 14.01 9 11.01"></polyline>
+      </svg>
+      Atender
+    </button>
+  `;
+  
+  const atendidaBtn = `
+    <button class="btn btn-sm btn-secondary" disabled aria-label="Alerta ya atendida">
+      <svg class="icon icon-muted" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
+      Atendida
+    </button>
+  `;
+  
+  alertasTableBody.innerHTML = sortedAlertas.map(a => {
+    const stockClass = getStockClass(a.stock_al_generar, a.producto?.stock_minimo);
+    const isLowStock = stockClass === 'agotado' || stockClass === 'bajo';
+    const confianzaLabel = a.confianza === ALERTAS_CONFIANZA.BAJA ? 'Baja' : 'Normal';
+    const confianzaIcon = a.confianza === ALERTAS_CONFIANZA.BAJA ? warningIcon : successIcon;
+    const btnHtml = a.estado === ALERTAS_ESTADO.PENDIENTE ? atenderBtn(a.id, a.producto?.nombre || '') : atendidaBtn;
+    
+    return `
     <tr data-id="${a.id}">
       <td>${escapeHtml(a.producto?.nombre || a.producto_nombre || 'N/A')}</td>
-      <td><span class="badge badge-stock-${getStockClass(a.stock_al_generar, a.producto?.stock_minimo)}">${a.stock_al_generar}</span></td>
+      <td><span class="badge badge-stock-${stockClass}">${a.stock_al_generar}</span></td>
       <td>${a.producto?.stock_minimo || 'N/A'}</td>
       <td>${a.cantidad_sugerida}</td>
       <td>${escapeHtml(a.producto?.proveedor?.nombre || a.proveedor_nombre || 'N/A')}</td>
-      <td><span class="badge badge-confianza-${a.confianza || ALERTAS_CONFIANZA.NORMAL}">${a.confianza === ALERTAS_CONFIANZA.BAJA ? '⚠ Baja' : '✓ Normal'}</span></td>
+      <td>
+        <span class="badge badge-confianza-${a.confianza || ALERTAS_CONFIANZA.NORMAL}" title="${isLowStock ? 'Stock bajo - confianza calculada' : 'Stock adecuado - confianza normal'}">
+          ${confianzaIcon} ${confianzaLabel}
+        </span>
+      </td>
       <td><span class="badge ${a.estado === ALERTAS_ESTADO.PENDIENTE ? 'badge-warning' : 'badge-success'}">${a.estado === ALERTAS_ESTADO.PENDIENTE ? 'Pendiente' : 'Atendida'}</span></td>
       <td>${formatDate(a.fecha_creada)}</td>
-<td class="text-end">
-        ${a.estado === ALERTAS_ESTADO.PENDIENTE ? `
-          <button class="btn btn-sm btn-primary" data-action="atender" data-id="${a.id}" aria-label="Atender alerta de ${escapeHtml(a.producto?.nombre || '')}">
-            <svg class="icon icon-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-              <polyline points="22 4 12 14.01 9 11.01"></polyline>
-            </svg>
-            Atender
-          </button>
-        ` : `
-          <span class="text-muted">—</span>
-        `}
-      </td>
+      <td class="text-end">${btnHtml}</td>
     </tr>
-  `).join('');
+  `;
+  }).join('');
   
   alertasTableBody.querySelectorAll('[data-action="atender"]').forEach(btn => {
     btn.addEventListener('click', (e) => {
@@ -206,11 +238,22 @@ function renderBitacora(bitacora) {
   }
   
   bitacoraEmpty.classList.add('d-none');
+  
+  // Add counter
+  const counter = document.getElementById('bitacora-counter');
+  if (counter) {
+    counter.textContent = `${bitacora.length} registros`;
+  }
+  
   bitacoraTableBody.innerHTML = bitacora.map(b => `
     <tr>
       <td>${formatDate(b.fecha)}</td>
       <td>${escapeHtml(b.usuario_nombre || 'N/A')}</td>
-      <td><code>${escapeHtml(b.accion)}</code></td>
+      <td>
+        <span class="badge badge-soft" style="background-color: var(--color-primary-light); color: var(--color-primary);">
+          ${formatActionLabel(b.accion)}
+        </span>
+      </td>
       <td>${escapeHtml(b.entidad || '-')}</td>
       <td>${escapeHtml(b.entidad_id || '-')}</td>
       <td>

@@ -1,5 +1,5 @@
 import { api, ENDPOINTS } from './apiFactory.js';
-import { showToast, escapeHtml, formatCurrency, formatDateShort } from './ui.js';
+import { showToast, escapeHtml, formatCurrency, formatDateShort, formatDateShortMonth } from './ui.js';
 
 let ventasChart = null;
 let topProductosChart = null;
@@ -21,11 +21,11 @@ async function loadResumen() {
   try {
     const data = await api.get(ENDPOINTS.reportes.resumen);
     
-const kpis = [
+    const kpis = [
       { 
         label: 'Ventas Hoy', 
         value: formatCurrency(data.ventas_hoy?.total || 0), 
-        trend: data.ventas_hoy?.tendencia || null,
+        trend: null, // Removed trend as it was misleading
         icon: '<svg class="icon icon-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2z"></path><path d="M12 6v6l4 4"></path></svg>',
         class: 'primary'
       },
@@ -47,7 +47,7 @@ const kpis = [
         label: 'Ticket Promedio', 
         value: formatCurrency(data.ticket_promedio || 0), 
         trend: null,
-        icon: '<svg class="icon icon-info" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>',
+        icon: '<svg class="icon icon-info" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>',
         class: 'info'
       }
     ];
@@ -57,14 +57,6 @@ const kpis = [
         <div class="kpi-icon" aria-hidden="true">${kpi.icon}</div>
         <div class="kpi-label">${escapeHtml(kpi.label)}</div>
         <div class="kpi-value">${escapeHtml(kpi.value)}</div>
-        ${kpi.trend !== null ? `
-          <div class="kpi-trend ${kpi.trend >= 0 ? 'up' : 'down'}">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-              ${kpi.trend >= 0 ? '<polyline points="18 15 12 9 6 15"></polyline>' : '<polyline points="6 9 12 15 18 9"></polyline>'}
-            </svg>
-            <span>${kpi.trend >= 0 ? '+' : ''}${kpi.trend}% vs ayer</span>
-          </div>
-        ` : ''}
       </div>
     `).join('');
   } catch (error) {
@@ -81,12 +73,20 @@ const kpis = [
 async function loadVentasPorDia() {
   try {
     const data = await api.get(ENDPOINTS.reportes.ventasPorDia);
-    const labels = data.map(d => formatDateShort(d.fecha));
+    const today = new Date().toISOString().split('T')[0];
+    const labels = data.map(d => {
+      const isToday = d.fecha === today;
+      return isToday ? formatDateShortMonth(d.fecha) + ' (hoy, parcial)' : formatDateShortMonth(d.fecha);
+    });
     const values = data.map(d => d.total);
+    const isTodayArray = data.map(d => d.fecha === today);
     
     const ctx = document.getElementById('chart-ventas-dia').getContext('2d');
     
     if (ventasChart) ventasChart.destroy();
+    
+    // Create point colors - last point (today) in warning color
+    const pointColors = isTodayArray.map(isToday => isToday ? '#d97706' : '#2563eb');
     
     ventasChart = new Chart(ctx, {
       type: 'line',
@@ -99,14 +99,28 @@ async function loadVentasPorDia() {
           backgroundColor: 'rgba(37, 99, 235, 0.1)',
           fill: true,
           tension: 0.3,
-          pointBackgroundColor: '#2563eb',
+          pointBackgroundColor: pointColors,
           pointBorderColor: '#fff',
           pointBorderWidth: 2,
           pointRadius: 4,
           pointHoverRadius: 6
         }]
       },
-      options: getChartOptions('Ventas (C$)')
+      options: {
+        ...getChartOptions('Ventas (C$)'),
+        scales: {
+          x: {
+            grid: { display: false },
+            ticks: { color: '#94a3b8', font: { size: 11 } }
+          },
+          y: {
+            grid: { color: '#e2e8f0' },
+            ticks: { color: '#94a3b8', font: { size: 11 }, callback: v => formatCurrency(v) },
+            title: { display: true, text: 'Ventas (C$)', color: '#64748b', font: { size: 11, weight: '500' } },
+            beginAtZero: true
+          }
+        }
+      }
     });
   } catch (error) {
     console.error('Error cargando ventas por día:', error);
@@ -144,7 +158,19 @@ async function loadTopProductos() {
       },
       options: {
         ...getChartOptions('Unidades'),
-        indexAxis: 'y'
+        indexAxis: 'y',
+        scales: {
+          x: {
+            grid: { color: '#e2e8f0' },
+            ticks: { color: '#94a3b8', font: { size: 11 } },
+            title: { display: true, text: 'Unidades vendidas', color: '#64748b', font: { size: 11, weight: '500' } },
+            beginAtZero: true
+          },
+          y: {
+            grid: { display: false },
+            ticks: { color: '#94a3b8', font: { size: 11 } }
+          }
+        }
       }
     });
   } catch (error) {
