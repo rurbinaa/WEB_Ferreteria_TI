@@ -2,13 +2,14 @@
 from typing import List, Optional
 
 from fastapi import APIRouter, Depends, Query
-from sqlalchemy import func, select
+from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from app.database import get_db
 from app.models import Bitacora, Usuario
 from app.schemas import BitacoraOut
 from app.security import require_role
+from app.utils import rango_dia
 
 router = APIRouter(prefix="/bitacora", tags=["bitacora"])
 
@@ -28,6 +29,7 @@ def listar_bitacora(
     if accion:
         consulta = consulta.where(Bitacora.accion == accion)
     if fecha:
-        consulta = consulta.where(func.date(Bitacora.fecha) == fecha)
+        inicio, fin = rango_dia(fecha)
+        consulta = consulta.where(Bitacora.fecha >= inicio, Bitacora.fecha < fin)
 
     return list(db.scalars(consulta.limit(limite)).all())

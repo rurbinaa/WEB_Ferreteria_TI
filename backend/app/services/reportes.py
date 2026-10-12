@@ -8,27 +8,27 @@ from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
 from app.models import Alerta, DetalleVenta, Producto, Venta
-from app.utils import ahora_utc, hoy_utc
+from app.utils import ahora_utc, hoy_utc, rango_dia
 
 
-def _total_ventas_del_dia(db: Session, dia: str) -> float:
+def _total_ventas_del_dia(db: Session, dia) -> float:
+    inicio, fin = rango_dia(dia)
     total = db.scalar(
         select(func.coalesce(func.sum(Venta.total), 0.0)).where(
             Venta.estado == "completada",
-            func.date(Venta.fecha) == dia,
+            Venta.fecha >= inicio,
+            Venta.fecha < fin,
         )
     )
     return round(float(total or 0.0), 2)
 
 
 def resumen(db: Session) -> dict:
-    hoy = ahora_utc()
+    hoy = ahora_utc().date()
     ayer = hoy - timedelta(days=1)
-    hoy_str = hoy.date().isoformat()
-    ayer_str = ayer.date().isoformat()
 
-    total_hoy = _total_ventas_del_dia(db, hoy_str)
-    total_ayer = _total_ventas_del_dia(db, ayer_str)
+    total_hoy = _total_ventas_del_dia(db, hoy)
+    total_ayer = _total_ventas_del_dia(db, ayer)
 
     tendencia = None
     if total_ayer > 0:
@@ -62,8 +62,8 @@ def ventas_por_dia(db: Session, dias: int = 7) -> List[dict]:
     hoy = hoy_utc()
     resultado = []
     for offset in range(dias - 1, -1, -1):
-        dia = (hoy - timedelta(days=offset)).isoformat()
-        resultado.append({"fecha": dia, "total": _total_ventas_del_dia(db, dia)})
+        dia = hoy - timedelta(days=offset)
+        resultado.append({"fecha": dia.isoformat(), "total": _total_ventas_del_dia(db, dia)})
     return resultado
 
 

@@ -11,7 +11,7 @@ from app.models import Usuario, Venta
 from app.schemas import ErrorResponse, VentaAnular, VentaCreate, VentaOut
 from app.security import get_current_user, require_role
 from app.services import bitacora, ventas as ventas_service
-from app.utils import ahora_utc
+from app.utils import ahora_utc, rango_dia
 
 router = APIRouter(prefix="/ventas", tags=["ventas"])
 
@@ -39,9 +39,11 @@ def listar_ventas(
 ) -> List[dict]:
     consulta = select(Venta).order_by(Venta.fecha.desc())
     if usuario.rol != "admin":
+        inicio, fin = rango_dia(ahora_utc())
         consulta = consulta.where(
             Venta.usuario_id == usuario.id,
-            Venta.fecha >= ahora_utc().replace(hour=0, minute=0, second=0, microsecond=0),
+            Venta.fecha >= inicio,
+            Venta.fecha < fin,
         )
     ventas = db.scalars(consulta).all()
     return [ventas_service.venta_a_dict(venta) for venta in ventas]
