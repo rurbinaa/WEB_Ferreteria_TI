@@ -3,7 +3,7 @@ import { STORAGE_KEYS } from './config.js';
 import { showToast, escapeHtml } from './ui.js';
 
 const PUBLIC_PAGES = ['login.html', 'index.html'];
-const ADMIN_ONLY_PAGES = ['dashboard.html', 'proveedores.html', 'alertas.html', 'productos.html'];
+const ADMIN_ONLY_PAGES = ['dashboard.html', 'proveedores.html', 'alertas.html'];
 const VENDEDOR_PAGES = ['historial.html', 'productos.html'];
 
 function getCurrentPage() {
