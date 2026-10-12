@@ -28,7 +28,7 @@ services:
       DATABASE_URL: postgresql+psycopg://${POSTGRES_USER:-ferreteria}:${POSTGRES_PASSWORD:-ferreteria}@db:5432/${POSTGRES_DB:-ferreteria}
       SECRET_KEY: ${SECRET_KEY:-cambia-esta-clave-en-produccion}
       AUTO_SEED: "true"
-      ALLOWED_ORIGINS: ${ALLOWED_ORIGINS:-http://localhost:8080,http://127.0.0.1:8080}
+      ALLOWED_ORIGINS: ${ALLOWED_ORIGINS:-http://localhost:3000,http://127.0.0.1:3000,http://localhost:8080,http://127.0.0.1:8080}
     depends_on:
       db:
         condition: service_healthy
