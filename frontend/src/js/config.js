@@ -1,9 +1,10 @@
 export const API_BASE_URL = 'http://localhost:8000';
 
-// Flag para alternar entre API real y mock (configurable via localStorage o URL)
-// Por defecto usa mock para desarrollo sin backend
+// Flag para alternar entre API real y mock (configurable via localStorage o URL).
+// La rama de integración usa la API real por defecto; ?api=mock conserva el
+// modo de demostración para pruebas de interfaz sin backend.
 export const USE_REAL_API = (() => {
-  // Prioridad: 1. URL param ?api=real|mock  2. localStorage  3. default false
+  // Prioridad: 1. URL param ?api=real|mock  2. localStorage  3. API real
   const urlParams = new URLSearchParams(window.location.search);
   if (urlParams.has('api')) {
     return urlParams.get('api') === 'real';
@@ -12,7 +13,7 @@ export const USE_REAL_API = (() => {
   if (stored !== null) {
     return stored === 'true';
   }
-  return false;
+  return true;
 })();
 
 // Función para cambiar el modo en runtime (requiere recarga)
