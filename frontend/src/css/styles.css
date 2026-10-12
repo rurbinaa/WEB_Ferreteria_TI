@@ -746,6 +746,10 @@ tbody tr:hover td {
   visibility: visible;
 }
 
+.modal-overlay .modal {
+  display: block;
+}
+
 .modal {
   background-color: var(--color-bg-card);
   border-radius: var(--radius-lg);

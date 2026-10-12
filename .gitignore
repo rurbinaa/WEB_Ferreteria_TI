@@ -36,6 +36,7 @@ build/
 # Local development
 *.local
 local/
+.worktrees/
 
 # Frontend - no build step required, but ignore if any
 frontend/src/css/styles.css.map
