@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Proveedores y Entradas - Sistema Ferretería</title>
+  <link rel="stylesheet" href="../src/lib/bootstrap/bootstrap.min.css">
+  <link rel="stylesheet" href="../src/lib/bootstrap-icons/bootstrap-icons.css">
+  <link rel="stylesheet" href="../src/css/styles.css">
+  <script src="../src/lib/bootstrap/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar" role="banner">
+      <a href="dashboard.html" class="topbar-brand" aria-label="Ferretería - Inicio">
+        <span class="topbar-brand-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+            <path d="M2 17l10 5 10-5"></path>
+            <path d="M2 12l10 5 10-5"></path>
+          </svg>
+        </span>
+        <span>Ferretería</span>
+      </a>
+      
+      <nav class="topbar-nav" id="topbar-nav" role="navigation" aria-label="Navegación principal">
+      </nav>
+      
+      <div class="topbar-user" id="topbar-user">
+      </div>
+    </header>
+    
+    <main class="workspace" role="main">
+      <header class="page-header">
+        <a href="dashboard.html" class="btn btn-ghost btn-sm d-md-none mb-3" style="width: 100%;" aria-label="Volver al Dashboard">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="me-2">
+            <path d="M19 12H5"></path>
+            <path d="M12 19l-7-7 7-7"></path>
+          </svg>
+          Volver al Dashboard
+        </a>
+        <h1 class="page-title">Proveedores y Entradas</h1>
+      </header>
+      
+      <div class="tab-bar" role="tablist" aria-label="Secciones de proveedores">
+        <button role="tab" id="tab-proveedores-btn" class="tab-btn active" data-tab="proveedores" aria-selected="true" aria-controls="tab-proveedores">Proveedores</button>
+        <button role="tab" id="tab-entradas-btn" class="tab-btn" data-tab="entradas" aria-selected="false" aria-controls="tab-entradas">Entradas de Mercancía</button>
+      </div>
+      
+      <div class="tab-panel active" id="tab-proveedores" role="tabpanel" aria-labelledby="tab-proveedores-btn">
+        <header class="page-header" style="margin-bottom: var(--space-4);">
+          <h2 class="page-title" style="font-size: 1.125rem;">Proveedores</h2>
+          <button class="btn btn-primary" id="btn-new-proveedor" aria-label="Nuevo proveedor">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="12" y1="5" x2="12" y2="19"></line>
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+            </svg>
+            Nuevo Proveedor
+          </button>
+        </header>
+        
+        <div class="table-wrapper">
+          <table class="table table-hover" id="proveedores-table" role="grid" aria-label="Lista de proveedores">
+            <thead>
+              <tr>
+                <th scope="col">Nombre</th>
+                <th scope="col">Teléfono</th>
+                <th scope="col">Correo</th>
+                <th scope="col">Días Entrega</th>
+                <th scope="col">Estado</th>
+                <th scope="col" class="text-end">Acciones</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+          <div id="proveedores-empty" class="empty-state d-none" style="padding: var(--space-8);">
+            <svg class="empty-state-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+              <circle cx="9" cy="7" r="4"></circle>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+            </svg>
+            <p class="empty-state-title">Sin proveedores</p>
+            <p class="empty-state-message">Agrega tu primer proveedor para registrar entradas</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="tab-panel" id="tab-entradas" role="tabpanel" aria-labelledby="tab-entradas-btn" hidden>
+        <header class="page-header" style="margin-bottom: var(--space-4);">
+          <a href="dashboard.html" class="btn btn-ghost btn-sm d-md-none mb-3" style="width: 100%;" aria-label="Volver al Dashboard">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="me-2">
+              <path d="M19 12H5"></path>
+              <path d="M12 19l-7-7 7-7"></path>
+            </svg>
+            Volver al Dashboard
+          </a>
+          <h2 class="page-title" style="font-size: 1.125rem;">Registrar Entrada de Mercancía</h2>
+        </header>
+        
+        <form id="entrada-form" class="card" style="max-width: 800px; margin-bottom: var(--space-6);" novalidate>
+          <div class="card-body">
+            <div class="row g-3">
+              <div class="col-md-4">
+                <label for="e_producto_id" class="form-label">Producto *</label>
+                <select id="e_producto_id" class="form-select" required aria-label="Seleccionar producto">
+                  <option value="">Seleccionar producto...</option>
+                </select>
+                <div class="invalid-feedback">Selecciona un producto</div>
+              </div>
+              <div class="col-md-2">
+                <label for="e_cantidad" class="form-label">Cantidad *</label>
+                <input type="number" id="e_cantidad" class="form-control" min="1" value="1" required aria-label="Cantidad">
+                <div class="invalid-feedback">Cantidad mínima 1</div>
+              </div>
+              <div class="col-md-3">
+                <label for="e_costo_unitario" class="form-label">Costo Unitario *</label>
+                <input type="number" id="e_costo_unitario" class="form-control" step="0.01" min="0.01" required aria-label="Costo unitario">
+                <div class="invalid-feedback">Costo debe ser mayor a 0</div>
+              </div>
+              <div class="col-md-3">
+                <label for="e_proveedor_id" class="form-label">Proveedor *</label>
+                <select id="e_proveedor_id" class="form-select" required aria-label="Seleccionar proveedor">
+                  <option value="">Seleccionar proveedor...</option>
+                </select>
+                <div class="invalid-feedback">Selecciona un proveedor</div>
+              </div>
+            </div>
+            <div class="mt-3">
+              <button type="submit" class="btn btn-success btn-lg">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="me-2">
+                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                  <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                </svg>
+                Registrar Entrada
+              </button>
+            </div>
+          </div>
+        </form>
+        
+        <header class="page-header" style="margin-bottom: var(--space-4);">
+          <h2 class="page-title" style="font-size: 1.125rem;">Historial de Entradas</h2>
+        </header>
+        
+        <div class="table-wrapper">
+          <table class="table table-hover" id="entradas-table" role="grid" aria-label="Historial de entradas">
+            <thead>
+              <tr>
+                <th scope="col">Fecha</th>
+                <th scope="col">Producto</th>
+                <th scope="col" class="text-center">Cantidad</th>
+                <th scope="col" class="text-end">Costo Unit.</th>
+                <th scope="col">Proveedor</th>
+                <th scope="col" class="text-end">Total</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+          <div id="entradas-empty" class="empty-state d-none" style="padding: var(--space-8);">
+            <p class="empty-state-title">Sin entradas registradas</p>
+            <p class="empty-state-message">Las entradas de mercancía aparecerán aquí</p>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+  
+  <div class="modal-overlay" id="proveedor-modal" role="dialog" aria-modal="true" aria-labelledby="proveedor-modal-title">
+    <div class="modal">
+      <header class="modal-header">
+        <h3 class="modal-title" id="proveedor-modal-title">Nuevo Proveedor</h3>
+        <button type="button" class="modal-close" aria-label="Cerrar">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </header>
+      <form id="proveedor-form" class="needs-validation" novalidate>
+        <div class="modal-body">
+          <input type="hidden" id="proveedor-id">
+          
+          <div class="row g-3">
+            <div class="col-md-12">
+              <label for="pr_nombre" class="form-label">Nombre *</label>
+              <input type="text" id="pr_nombre" class="form-control" required>
+              <div class="invalid-feedback">El nombre es requerido</div>
+            </div>
+            <div class="col-md-6">
+              <label for="pr_telefono" class="form-label">Teléfono</label>
+              <input type="tel" id="pr_telefono" class="form-control">
+            </div>
+            <div class="col-md-6">
+              <label for="pr_correo" class="form-label">Correo</label>
+              <input type="email" id="pr_correo" class="form-control">
+            </div>
+            <div class="col-md-6">
+              <label for="pr_dias_entrega" class="form-label">Días de Entrega *</label>
+              <input type="number" id="pr_dias_entrega" class="form-control" min="0" value="7" required>
+              <div class="invalid-feedback">Días de entrega requeridos</div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-check mt-4">
+                <input type="checkbox" id="pr_activo" class="form-check-input" checked>
+                <label class="form-check-label" for="pr_activo">Activo</label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <footer class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+          <button type="submit" class="btn btn-primary">Guardar</button>
+        </footer>
+      </form>
+    </div>
+  </div>
+  
+  <script type="module" src="../src/js/auth.js"></script>
+  <script type="module" src="../src/js/proveedores.js"></script>
+  <script type="module" src="../src/js/app.js"></script>
+</body>
+</html>

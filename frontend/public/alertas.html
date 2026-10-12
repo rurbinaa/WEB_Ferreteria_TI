@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alertas y Bitácora - Sistema Ferretería</title>
+  <link rel="stylesheet" href="../src/lib/bootstrap/bootstrap.min.css">
+  <link rel="stylesheet" href="../src/lib/bootstrap-icons/bootstrap-icons.css">
+  <link rel="stylesheet" href="../src/css/styles.css">
+  <script src="../src/lib/bootstrap/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar" role="banner">
+      <a href="dashboard.html" class="topbar-brand" aria-label="Ferretería - Inicio">
+        <span class="topbar-brand-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+            <path d="M2 17l10 5 10-5"></path>
+            <path d="M2 12l10 5 10-5"></path>
+          </svg>
+        </span>
+        <span>Ferretería</span>
+      </a>
+      
+      <nav class="topbar-nav" id="topbar-nav" role="navigation" aria-label="Navegación principal">
+      </nav>
+      
+      <div class="topbar-user" id="topbar-user">
+      </div>
+    </header>
+    
+    <main class="workspace" role="main">
+      <header class="page-header">
+        <a href="dashboard.html" class="btn btn-ghost btn-sm d-md-none mb-3" style="width: 100%;" aria-label="Volver al Dashboard">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="me-2">
+            <path d="M19 12H5"></path>
+            <path d="M12 19l-7-7 7-7"></path>
+          </svg>
+          Volver al Dashboard
+        </a>
+        <h1 class="page-title">Alertas y Bitácora</h1>
+      </header>
+      
+      <div class="tab-bar" role="tablist" aria-label="Secciones de alertas">
+        <button role="tab" id="tab-alertas-btn" class="tab-btn active" data-tab="alertas" aria-selected="true" aria-controls="tab-alertas">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="me-1">
+            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+            <line x1="12" y1="9" x2="12" y2="13"></line>
+            <line x1="12" y1="17" x2="12.01" y2="17"></line>
+          </svg>
+          Alertas de Reposición
+        </button>
+        <button role="tab" id="tab-bitacora-btn" class="tab-btn" data-tab="bitacora" aria-selected="false" aria-controls="tab-bitacora">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="me-1">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <line x1="16" y1="13" x2="8" y2="13"></line>
+            <line x1="16" y1="17" x2="8" y2="17"></line>
+            <polyline points="10 9 9 9 8 9"></polyline>
+          </svg>
+          Bitácora
+        </button>
+      </div>
+      
+      <div class="tab-panel active" id="tab-alertas" role="tabpanel" aria-labelledby="tab-alertas-btn">
+        <div class="filters-bar" role="search" aria-label="Filtros de alertas">
+          <input type="search" id="filter-alerta-producto" class="form-control" placeholder="Filtrar por producto..." aria-label="Buscar alerta por producto">
+          <select id="filter-alerta-estado" class="form-select" aria-label="Filtrar por estado">
+            <option value="">Todos los estados</option>
+            <option value="pendiente">Pendientes</option>
+            <option value="atendida">Atendidas</option>
+          </select>
+        </div>
+        
+        <div class="table-wrapper">
+          <table class="table table-hover" id="alertas-table" role="grid" aria-label="Lista de alertas de reposición">
+            <thead>
+              <tr>
+                <th scope="col">Producto</th>
+                <th scope="col">Stock Actual</th>
+                <th scope="col">Stock Mín.</th>
+                <th scope="col">Cant. Sugerida</th>
+                <th scope="col">Proveedor</th>
+                <th scope="col">Confianza</th>
+                <th scope="col">Estado</th>
+                <th scope="col">Fecha</th>
+                <th scope="col" class="text-end">Acciones</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+          <div id="alertas-empty" class="empty-state d-none" style="padding: var(--space-8);">
+            <svg class="empty-state-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+              <line x1="12" y1="9" x2="12" y2="13"></line>
+              <line x1="12" y1="17" x2="12.01" y2="17"></line>
+            </svg>
+            <p class="empty-state-title">Sin alertas</p>
+            <p class="empty-state-message">No hay alertas de reposición registradas</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="tab-panel" id="tab-bitacora" role="tabpanel" aria-labelledby="tab-bitacora-btn" hidden>
+        <div class="filters-bar" role="search" aria-label="Filtros de bitácora">
+          <input type="text" id="filter-bitacora-usuario" class="form-control" placeholder="Usuario" aria-label="Filtrar por usuario">
+          <select id="filter-bitacora-accion" class="form-select" aria-label="Filtrar por acción">
+            <option value="">Todas las acciones</option>
+          </select>
+          <input type="date" id="filter-bitacora-fecha" class="form-control" aria-label="Filtrar por fecha">
+          <button type="button" id="btn-limpiar-filtros" class="btn btn-outline-secondary" aria-label="Limpiar filtros">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="me-1">
+              <polyline points="3 6 5 6 21 6"></polyline>
+              <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+            </svg>
+            Limpiar
+          </button>
+        </div>
+        
+        <div class="table-wrapper">
+          <table class="table table-hover" id="bitacora-table" role="grid" aria-label="Bitácora de acciones del sistema">
+            <thead>
+              <tr>
+                <th scope="col">Fecha</th>
+                <th scope="col">Usuario</th>
+                <th scope="col">Acción</th>
+                <th scope="col">Entidad</th>
+                <th scope="col">Entidad ID</th>
+                <th scope="col">Resultado</th>
+                <th scope="col">Detalle</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+          <div id="bitacora-empty" class="empty-state d-none" style="padding: var(--space-8);">
+            <p class="empty-state-title">Sin registros</p>
+            <p class="empty-state-message">La bitácora está vacía</p>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+  
+  <script type="module" src="../src/js/auth.js"></script>
+  <script type="module" src="../src/js/alertas.js"></script>
+  <script type="module" src="../src/js/app.js"></script>
+</body>
+</html>

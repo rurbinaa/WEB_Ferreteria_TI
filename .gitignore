@@ -1,4 +1,53 @@
+# Dependencies
+node_modules/
 __pycache__/
 *.pyc
-.env
+*.pyo
+*.pyd
+.Python
 venv/
+env/
+.env
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Database
+*.sqlite
+*.sqlite3
+*.db
+
+# Build outputs
+dist/
+build/
+*.egg-info/
+
+# Local development
+*.local
+local/
+
+# Frontend - no build step required, but ignore if any
+frontend/src/css/styles.css.map
+frontend/src/lib/**/*.map
+
+# Backend
+backend/__pycache__/
+backend/.pytest_cache/
+backend/coverage/
+backend/*.sqlite3
+
+# Environment files (keep .env.example)
+.env
+.env.local
+.env.*.local

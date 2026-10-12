@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Iniciar Sesión - Sistema Ferretería</title>
+  <link rel="stylesheet" href="../src/lib/bootstrap/bootstrap.min.css">
+  <link rel="stylesheet" href="../src/lib/bootstrap-icons/bootstrap-icons.css">
+  <link rel="stylesheet" href="../src/css/07-login.css">
+  <script src="../src/lib/bootstrap/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+  <main class="login-page" role="main">
+    <!-- Lado izquierdo: Background/Imagen (70%) -->
+    <div class="login-bg" aria-hidden="true">
+      <div class="login-bg-pattern"></div>
+      <div class="login-bg-content">
+        <div class="login-bg-icon" aria-hidden="true">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+            <path d="M2 17l10 5 10-5"></path>
+            <path d="M2 12l10 5 10-5"></path>
+          </svg>
+        </div>
+        <h1 class="login-bg-title">Sistema Ferretería</h1>
+        <p class="login-bg-subtitle">Gestión completa de ventas, inventario y proveedores</p>
+        
+        <div class="login-bg-features">
+          <div class="login-bg-feature">
+            <div class="login-bg-feature-icon" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <polyline points="14 2 14 8 20 8"></polyline>
+                <line x1="16" y1="13" x2="8" y2="13"></line>
+                <line x1="16" y1="17" x2="8" y2="17"></line>
+                <polyline points="10 9 9 9 8 9"></polyline>
+              </svg>
+            </div>
+            <div class="login-bg-feature-text">
+              <p class="login-bg-feature-label">Ventas rápidas</p>
+              <p class="login-bg-feature-desc">POS optimizado para mostrador</p>
+            </div>
+          </div>
+          <div class="login-bg-feature">
+            <div class="login-bg-feature-icon" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                <line x1="12" y1="22.08" x2="12" y2="12"></line>
+              </svg>
+            </div>
+            <div class="login-bg-feature-text">
+              <p class="login-bg-feature-label">Inventario</p>
+              <p class="login-bg-feature-desc">Stock en tiempo real</p>
+            </div>
+          </div>
+          <div class="login-bg-feature">
+            <div class="login-bg-feature-icon" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                <circle cx="9" cy="7" r="4"></circle>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+              </svg>
+            </div>
+            <div class="login-bg-feature-text">
+              <p class="login-bg-feature-label">Proveedores</p>
+              <p class="login-bg-feature-desc">Gestión de entradas</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Lado derecho: Formulario (30%) -->
+    <div class="login-form-side">
+      <div class="login-form-container">
+        <header class="login-form-header">
+          <h1 class="login-form-title">Iniciar sesión</h1>
+          <p class="login-form-subtitle">Ingresa tus credenciales para acceder</p>
+        </header>
+
+        <form id="login-form" class="login-form" novalidate>
+          <div id="login-error" class="alert alert-danger d-none" role="alert">
+            <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="8" x2="12" y2="12"></line>
+              <line x1="12" y1="16" x2="12.01" y2="16"></line>
+            </svg>
+            <span></span>
+          </div>
+
+          <div class="form-group">
+            <label for="username" class="form-label">Usuario</label>
+            <div class="form-input-wrapper">
+                <svg class="field-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecaper="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+                </svg>
+                <input type="text" id="username" name="username" class="form-input" placeholder="Tu Usuario" required autocomplete="username" autofocus>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="password" class="form-label">Contraseña</label>
+            <div class="form-input-wrapper">
+              <svg class="field-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+              </svg>
+              <input type="password" id="password" name="password" class="form-input" 
+                     placeholder="Tu contraseña" required autocomplete="current-password">
+              <button type="button" id="toggle-password" class="toggle-password" aria-label="Mostrar contraseña">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>
+                </svg>
+              </button>
+              <div class="invalid-feedback">La contraseña es requerida</div>
+            </div>
+          </div>
+
+          <button type="submit" id="login-btn" class="btn-login">
+            <span class="btn-text">Entrar</span>
+            <span class="btn-loading">
+              <svg class="login-spinner" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                <circle cx="12" cy="12" r="10" stroke-opacity="0.25"></circle>
+                <path d="M12 2a10 10 0 0 1 10 10" stroke-opacity="1" stroke-linecap="round"></path>
+              </svg>
+            </span>
+          </button>
+        </form>
+
+        <footer class="login-footer">
+          <p class="login-footer-text">¿Problemas para entrar? Contacta con el administrador.</p>
+          <p class="login-footer-text">Ferretería — Sistema de Gestión v1.0</p>
+        </footer>
+      </div>
+    </div>
+  </main>
+
+  <script type="module" src="../src/js/auth.js"></script>
+</body>
+</html>
