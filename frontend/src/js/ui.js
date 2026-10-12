@@ -121,9 +121,10 @@ export function escapeHtml(text) {
 }
 
 export function formatCurrency(amount) {
-  return new Intl.NumberFormat('es-ES', {
+  // Formato de córdobas nicaragüenses: C$ 81.30
+  return new Intl.NumberFormat('es-NI', {
     style: 'currency',
-    currency: 'USD',
+    currency: 'NIO',
     minimumFractionDigits: 2
   }).format(amount);
 }

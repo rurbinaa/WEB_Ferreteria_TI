@@ -106,7 +106,7 @@ async function loadVentasPorDia() {
           pointHoverRadius: 6
         }]
       },
-      options: getChartOptions('Ventas (USD)')
+      options: getChartOptions('Ventas (C$)')
     });
   } catch (error) {
     console.error('Error cargando ventas por día:', error);
