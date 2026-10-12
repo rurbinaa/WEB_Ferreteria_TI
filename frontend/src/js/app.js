@@ -1,6 +1,7 @@
 import { api } from './apiFactory.js';
 import { initOffline, forceSync } from './offline.js';
 import { initKeyboardShortcuts } from './keyboard.js';
+import { initVentaModal } from './ventaModal.js';
 import { initNotas } from './notas.js';
 
 function initTabs() {
@@ -49,6 +50,7 @@ export function initApp() {
   initOffline();
   initKeyboardShortcuts();
   initGlobalKeyboard();
+  initVentaModal();
   initNotas();
   
   console.log('Ferretería App initialized');

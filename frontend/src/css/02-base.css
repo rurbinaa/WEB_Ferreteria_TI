@@ -88,6 +88,25 @@ tbody tr:hover td {
   border: 1px solid var(--color-border);
   border-radius: var(--radius-sm);
   box-shadow: 0 1px 0 var(--color-border);
+  color: var(--color-text);
+}
+
+/* Ensure kbd is visible inside buttons */
+.btn .kbd {
+  color: inherit;
+  background: rgba(0, 0, 0, 0.1);
+  border-color: rgba(0, 0, 0, 0.15);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+}
+
+.btn-primary .kbd,
+.btn-success .kbd,
+.btn-danger .kbd,
+.btn-warning .kbd,
+.btn-info .kbd {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
 .sr-only {

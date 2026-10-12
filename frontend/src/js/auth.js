@@ -3,8 +3,8 @@ import { STORAGE_KEYS } from './config.js';
 import { showToast, escapeHtml } from './ui.js';
 
 const PUBLIC_PAGES = ['login.html', 'index.html'];
-const ADMIN_ONLY_PAGES = ['dashboard.html', 'proveedores.html', 'alertas.html'];
-const VENDEDOR_PAGES = ['venta.html', 'productos.html'];
+const ADMIN_ONLY_PAGES = ['dashboard.html', 'proveedores.html', 'alertas.html', 'productos.html'];
+const VENDEDOR_PAGES = ['historial.html', 'productos.html'];
 
 function getCurrentPage() {
   const path = window.location.pathname;
@@ -24,7 +24,7 @@ function canAccessPage(page) {
 
 function getDefaultPageForRole(role) {
   if (role === ROLES.ADMIN) return 'dashboard.html';
-  if (role === ROLES.VENDEDOR) return 'venta.html';
+  if (role === ROLES.VENDEDOR) return 'historial.html';
   return 'login.html';
 }
 
@@ -60,14 +60,14 @@ function renderTopBar() {
   if (role === ROLES.ADMIN) {
     tabsHtml = `
       <a href="dashboard.html" class="topbar-tab" data-page="dashboard">Dashboard</a>
-      <a href="venta.html" class="topbar-tab" data-page="venta">Nueva Venta</a>
+      <a href="historial.html" class="topbar-tab" data-page="historial">Historial de ventas</a>
       <a href="productos.html" class="topbar-tab" data-page="productos">Productos</a>
       <a href="proveedores.html" class="topbar-tab" data-page="proveedores">Proveedores</a>
       <a href="alertas.html" class="topbar-tab" data-page="alertas">Alertas</a>
     `;
   } else if (role === ROLES.VENDEDOR) {
     tabsHtml = `
-      <a href="venta.html" class="topbar-tab" data-page="venta">Nueva Venta</a>
+      <a href="historial.html" class="topbar-tab" data-page="historial">Historial de ventas</a>
       <a href="productos.html" class="topbar-tab" data-page="productos">Productos</a>
     `;
   }
@@ -83,13 +83,6 @@ function renderTopBar() {
 
   const roleClass = role === ROLES.ADMIN ? 'admin' : 'vendedor';
   const roleLabel = role === ROLES.ADMIN ? 'Administrador' : 'Vendedor';
-  const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
-  const isDark = currentTheme === 'dark';
-  const themeLabel = isDark ? 'Modo claro' : 'Modo oscuro';
-  const sunIcon = '<svg class="icon icon-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>';
-  const moonIcon = '<svg class="icon icon-muted" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>';
-  const themeIcon = isDark ? sunIcon : moonIcon;
-  const themeLabel = isDark ? 'Modo claro' : 'Modo oscuro';
   
   topbarUser.innerHTML = `
     <div class="topbar-user-info">
@@ -125,7 +118,7 @@ export async function handleLogin(form) {
   } catch (error) {
     showError(error.message || 'Usuario o contraseña incorrectos');
   } finally {
-    btn.disabled = true;
+    btn.disabled = false;
     btn.classList.remove('loading');
   }
 

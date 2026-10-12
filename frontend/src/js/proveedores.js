@@ -70,6 +70,23 @@ function setupEventListeners() {
   
   entradaForm.addEventListener('submit', handleEntradaSubmit);
   
+  // Live total calculation for entrada form
+  const eCantidad = document.getElementById('e_cantidad');
+  const eCostoUnitario = document.getElementById('e_costo_unitario');
+  const entradaTotalPreview = document.getElementById('entrada-total-preview');
+  
+  function updateEntradaTotal() {
+    const cantidad = parseInt(eCantidad.value) || 0;
+    const costo = parseFloat(eCostoUnitario.value) || 0;
+    const total = cantidad * costo;
+    if (entradaTotalPreview) {
+      entradaTotalPreview.textContent = formatCurrency(total);
+    }
+  }
+  
+  eCantidad.addEventListener('input', updateEntradaTotal);
+  eCostoUnitario.addEventListener('input', updateEntradaTotal);
+  
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && proveedorModal.classList.contains('show')) {
       closeProveedorModal();
@@ -94,11 +111,7 @@ async function loadSelectOptions() {
         `<option value="${p.id}">${escapeHtml(p.nombre)}</option>`
       ).join('');
     
-    document.getElementById('p_proveedor_id').innerHTML = '<option value="">Sin proveedor</option>' +
-      proveedores.filter(p => p.activo).map(p => 
-        `<option value="${p.id}">${escapeHtml(p.nombre)}</option>`
-      ).join('');
-  } catch (error) {
+    } catch (error) {
     console.warn('Error cargando opciones:', error);
   }
 }
@@ -335,3 +348,4 @@ async function handleEntradaSubmit(e) {
 }
 
 document.addEventListener('DOMContentLoaded', init);
+

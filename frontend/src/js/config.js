@@ -56,7 +56,8 @@ export const STORAGE_KEYS = {
   CATALOGO_CACHE: 'ferreteria_catalogo_cache',
   VENTAS_COLA: 'ferreteria_ventas_cola',
   VENTAS_RECHAZADAS: 'ferreteria_ventas_rechazadas',
-  POS_CART: 'ferreteria_pos_cart'
+  POS_CART: 'ferreteria_pos_cart',
+  VENTA_BORRADOR: 'ferreteria_venta_borrador'
 };
 
 export const ALERTAS_CONFIANZA = {
@@ -86,3 +87,4 @@ export const KEYBOARD_SHORTCUTS = {
 export const DEBOUNCE_MS = 150;
 export const SYNC_INTERVAL_MS = 30000;
 export const TOAST_DURATION_MS = 4000;
+export const IVA_RATE = 0.19;

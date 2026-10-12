@@ -18,8 +18,8 @@
   --color-border-strong: #cbd5e1;
 
   --color-text: #1e293b;
-  --color-text-secondary: #64748b;
-  --color-text-muted: #94a3b8;
+  --color-text-secondary: #475569; /* Darker for better readability */
+  --color-text-muted: #7a8ba8; /* Darker for better readability */
   --color-text-inverse: #ffffff;
 
   --color-stock-ok: var(--color-success);
@@ -45,6 +45,7 @@
   --z-modal: 300;
   --z-toast: 400;
   --z-topbar: 500;
+  --z-fab: 600;
 
   --topbar-height: 56px;
   --sidebar-width: 280px;

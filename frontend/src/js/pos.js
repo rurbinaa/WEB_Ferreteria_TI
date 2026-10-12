@@ -38,6 +38,7 @@ function init() {
   updateInvoiceNumber();
   renderCart();
   initOffline();
+  loadHistorialCount();
 }
 
 function setupEventListeners() {
@@ -72,7 +73,7 @@ function setupEventListeners() {
   
   btnConfirm.addEventListener('click', confirmSale);
   btnClear.addEventListener('click', clearCart);
-  btnNewSale.addEventListener('click', clearCart);
+  btnNewSale?.addEventListener('click', clearCart);
   
   historialHeader.addEventListener('click', toggleHistorial);
   historialHeader.addEventListener('keydown', (e) => {
@@ -246,8 +247,9 @@ function renderCart() {
   if (currentCart.length === 0) {
     invoiceLines.innerHTML = '';
     invoiceEmpty.style.display = 'flex';
-    invoiceTotals.style.display = 'none';
+    invoiceTotals.style.display = 'flex';
     btnConfirm.disabled = true;
+    updateTotals(); // Still update totals to show 0
     return;
   }
   
@@ -316,10 +318,12 @@ function updateTotals() {
   const subtotal = currentCart.reduce((sum, item) => sum + item.subtotal, 0);
   const iva = subtotal * IVA_RATE;
   const total = subtotal + iva;
+  const itemCount = currentCart.reduce((sum, item) => sum + item.cantidad, 0);
   
   subtotalEl.textContent = formatCurrency(subtotal);
   ivaEl.textContent = formatCurrency(iva);
   totalEl.textContent = formatCurrency(total);
+  document.getElementById('items-count').textContent = itemCount;
 }
 
 async function confirmSale() {
@@ -386,6 +390,20 @@ function updateInvoiceNumber() {
   const today = new Date();
   const dateStr = today.toISOString().slice(0, 10).replace(/-/g, '');
   invoiceNumberEl.textContent = `#${dateStr}-${String(currentInvoiceNumber).padStart(3, '0')}`;
+}
+
+async function loadHistorialCount() {
+  try {
+    const response = await api.get(ENDPOINTS.ventas.list);
+    const ventas = Array.isArray(response) ? response : [];
+    
+    const hoy = new Date().toISOString().split('T')[0];
+    const ventasHoy = ventas.filter(v => v.fecha?.startsWith(hoy));
+    
+    historialCount.textContent = ventasHoy.length;
+  } catch (error) {
+    console.error('Error cargando contador historial:', error);
+  }
 }
 
 function toggleHistorial() {

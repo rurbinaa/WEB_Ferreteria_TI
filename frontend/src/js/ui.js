@@ -10,6 +10,10 @@ function ensureToastContainer() {
   return toastContainer;
 }
 
+export function confirmDiscard(message = 'Tienes una venta en curso, ¿descartarla?', title = 'Descartar venta') {
+  return confirm(message, title);
+}
+
 function ensureSpinnerOverlay() {
   if (!spinnerOverlay) {
     spinnerOverlay = document.createElement('div');
@@ -147,6 +151,28 @@ export function formatDateShort(dateString) {
     month: '2-digit',
     year: 'numeric'
   }).format(date);
+}
+
+export function formatDateShortMonth(dateString) {
+  const date = new Date(dateString);
+  return new Intl.DateTimeFormat('es-ES', {
+    day: 'numeric',
+    month: 'short'
+  }).format(date);
+}
+
+export function formatActionLabel(action) {
+  const labels = {
+    'VENTA_CREADA': 'Venta creada',
+    'LOGIN_OK': 'Inicio de sesión',
+    'PRODUCTO_CREADO': 'Producto creado',
+    'ENTRADA_REGISTRADA': 'Entrada registrada',
+    'ALERTA_ATENDIDA': 'Alerta atendida',
+    'PROVEEDOR_CREADO': 'Proveedor creado',
+    'PROVEEDOR_ACTUALIZADO': 'Proveedor actualizado',
+    'VENTA_ANULADA': 'Venta anulada'
+  };
+  return labels[action] || action.replace(/_/g, ' ').toLowerCase().replace(/\b\w/g, l => l.toUpperCase());
 }
 
 export function generateClientUUID() {

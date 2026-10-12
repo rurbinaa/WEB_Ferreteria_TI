@@ -127,7 +127,10 @@
 
 .workspace {
   padding: var(--space-4);
-  max-width: 100%;
+  padding-bottom: calc(var(--space-4) + 80px); /* Space for FAB */
+  max-width: 1280px;
+  margin: 0 auto;
+  width: 100%;
 }
 
 .workspace-header {
